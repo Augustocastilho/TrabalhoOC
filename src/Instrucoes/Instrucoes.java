@@ -11,6 +11,7 @@ package Instrucoes;
  */
 public class Instrucoes {
 
+    /*
     private int add;
     private int sub;
     private int mult;
@@ -26,5 +27,16 @@ public class Instrucoes {
     private int bne;
     private int j;
     private int jr;
-    private int jal;
+    private int jal;*/
+
+    private String valor;
+   
+    
+    public String getValor() {
+        return valor;
+    }
+
+    public void setValor(String valor) {
+        this.valor = valor;
+    }
 }
