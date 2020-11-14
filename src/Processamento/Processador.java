@@ -10,7 +10,7 @@ public class Processador {
                 case 1:
                     return 0;
                 default:
-                    
+                    controleAlu
                     break;
         }
         return resultado;
