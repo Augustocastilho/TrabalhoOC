@@ -10,8 +10,12 @@ public class TipoR extends Instrucoes {
     private int funct; //6 bits
     
     private void atribuiValores(){
-        this.op = 0; //recebe os 6 primeiros bits de valor
-        this.rs = 0;
+        this.op = Integer.parseInt(getValor().substring(0, 5));
+        this.rs = Integer.parseInt(getValor().substring(6, 10));
+        this.rt = Integer.parseInt(getValor().substring(11, 15));
+        this.rd = Integer.parseInt(getValor().substring(16, 20));
+        this.shamt = Integer.parseInt(getValor().substring(21, 25));
+        this.funct = Integer.parseInt(getValor().substring(26, 31));
     }
     
     private void add(){}
