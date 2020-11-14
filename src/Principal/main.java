@@ -1,4 +1,4 @@
-package trabalhooc;
+package Principal;
 
 import Arquivos.Leitura;
 import java.util.Scanner;
