@@ -1,17 +1,11 @@
 package trabalhooc;
 
-import java.util.LinkedList;
+import Arquivos.Leitura;
 import java.util.Scanner;
-import Instrucoes.Instrucoes;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
 
 public class main {
 
-    public static void main(String[] args) throws IOException {
+    /*public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
         LinkedList<Instrucoes> entradas = new LinkedList<>();
 
@@ -62,5 +56,18 @@ public class main {
             System.out.println(valor.getValor());
         }
         entradas.clear(); //libera memória
+    }*/
+    public static void main(String[] args) {
+        Leitura output = new Leitura();
+        Scanner in = new Scanner(System.in);
+        System.out.println("Entre com o caminho para o arquivo de leitura (colocando o nome do arquivo com o final .txt): ");
+        String caminho = in.nextLine();
+        try{
+            String arquivo = output.leitura(caminho);
+            System.out.println(arquivo);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
     }
 }
