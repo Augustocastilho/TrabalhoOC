@@ -68,6 +68,6 @@ public class main {
         for(int i=0; i<entradas.size();i++)
             System.out.println(entradas.get(i).getValor());
   
-         entradas.clear(); //Libera memória
+        entradas.clear(); //Libera memória
     }
 }
