@@ -99,7 +99,7 @@ public class Instrucoes {
         return address;
     }
 
-    public void criaRegistradoresTemporarios() {
+    public void criaSinaisControle() {
         //tipos I
         registradores.put("RegWrite", getOp());
         registradores.put("MemToReg", getOp());
