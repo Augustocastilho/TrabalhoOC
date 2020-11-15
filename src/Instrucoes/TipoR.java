@@ -21,17 +21,6 @@ public class TipoR extends Instrucoes{
         this.funct = Integer.parseInt(getValor().substring(26, 31));
     }
     
-    registers.put("RegWrite", new Register(1));
-			registers.put("MemToReg", new Register(1));
-			registers.put("Branch", new Register(1));
-			registers.put("MemRead", new Register(1));
-			registers.put("MemWrite", new Register(1));
-			registers.put("BranchAddress", new Register(32));
-			registers.put("Zero", new Register(1));
-			registers.put("ALUResult", new Register(32));
-			registers.put("ReadData2", new Register(32));
-			registers.put("Destination", new Register(5));
-    
     public int add(int val, int val2){
         return val+val2;
     }
