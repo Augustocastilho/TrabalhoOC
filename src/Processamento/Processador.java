@@ -4,11 +4,18 @@ import Instrucoes.TipoR;
 import java.util.HashMap;
 import java.util.Map;
 
+
+/**
+ * simula o procedimento feito por um porcessador MIPS
+ */
 public class Processador {
 
     private HashMap<Integer, String> mapaInstrucoes = new HashMap<>();
     private String nomeInstrucao;
 
+    /**
+     * cria um dicionario com todas as operacoes possiveis
+    */
     private void criaMap() {
         mapaInstrucoes.put(100000, "add");
         mapaInstrucoes.put(100010, "sub");
@@ -33,6 +40,12 @@ public class Processador {
         return this.nomeInstrucao;
     }
 
+    /**
+    * @param entrada1 recebe o primeiro valor vindo do registrador
+    * @param entrada2 recebe o segundo valor vindo do registrador
+    * @param controleAlu indica qual operacao logica/matematica sera realizada
+    * @return retorna o resultado da operacao
+    */
     public int Alu(int entrada1, int entrada2, int controleAlu) {
         TipoR funcoes = new TipoR();
         int resultado = 0;

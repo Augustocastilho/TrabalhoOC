@@ -1,9 +1,8 @@
 package Instrucoes;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+/**
+ * Define todas as caracteriscas de operacoes do tipo R e calcula tais operacoes
+ */
 public class TipoR extends Instrucoes{
 
     private int op ; //6 bits
@@ -71,6 +70,7 @@ public class TipoR extends Instrucoes{
         int resultadoFinal = Integer.parseInt(resultado.toString());
         return resultadoFinal;
     }
+    
     public void slt(int val, int val2){}
     public void sll(int val, int val2){}
     public void jr(int val, int val2){}
