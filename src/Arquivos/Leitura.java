@@ -1,10 +1,9 @@
 package Arquivos;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
+import java.util.LinkedList;
 /**
  *
  * Onde é lido o arquivo .txt
@@ -12,15 +11,14 @@ import java.nio.file.Paths;
 
 public class Leitura {
     
-    public String leitura(String file) throws IOException{
-        Path caminho = Paths.get("arquivos/"+file);
-        try{
-            byte [] texto = Files.readAllBytes(caminho);
-            String leitura = new String(texto);
-            return leitura;
-        }catch(Exception e){
-            System.out.println("Erro na leitura.");
+    public LinkedList<String> leitura(String file) throws IOException{
+        String linha;
+        LinkedList<String> lista = new LinkedList<>();
+        BufferedReader br = new BufferedReader(new FileReader("arquivos/"+file));
+        while ((linha = br.readLine()) != null) {
+            lista.add(linha);
         }
-        return null;
+        br.close();
+        return lista;
     }
 }

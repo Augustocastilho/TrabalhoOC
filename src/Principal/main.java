@@ -28,12 +28,15 @@ public class main {
                 entradas.add(new Instrucoes());
                 entradas.getLast().setValor(scanner.nextLine().trim());
 
-                while (!entradas.getLast().getValor().equals("2")) {
+                while (!entradas.getLast().getValor().equals("2") || entradas.size() == 256) {
                     entradas.add(new Instrucoes());
                     entradas.getLast().setValor(scanner.nextLine().trim());
                 }
-
-                System.out.println("Leitura de dados finalizada.");
+                
+                if(entradas.size() == 256)
+                    System.out.println("Memória cheia, processamento finalizado");
+                else
+                    System.out.println("Leitura de dados finalizada.");
 
                 //Remove a última entrada que é a flag para parar a entrada de dados
                 entradas.remove(entradas.size() - 1);
@@ -48,27 +51,26 @@ public class main {
 
                 for (int i = 0; i < entradas.size(); i++)
                     entradas.get(i).setValorDecimal(entradas.get(i).converteValor(entradas.get(i).getValor()));
-
                 break;
             case 1:
                 //Pede para que o usuário entre com o nome do arquivo para que seja lido
                 System.out.println("Entre com o nome do arquivo de leitura (colocando o nome do arquivo com o final .txt): ");
                 String caminho = scanner.next();
+                LinkedList<String> arquivo = new LinkedList<>();
                 try {
-                    String arquivo = output.leitura(caminho);
-                    System.out.println(arquivo);
+                    arquivo = output.leitura(caminho);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                
-                //precisa implementar a inserçao de cada linha do arquivo no vetor
-                /*entradas.add(new Instrucoes());
-                
-                
-                for (int i = 0; i < entradas.size(); i++) {
-                    entradas.get(i).converteValor();
-                }*/
-                
+                                
+                for (String linha : arquivo) {
+                    entradas.add(new Instrucoes());
+                    entradas.getLast().setValor(linha);   
+                }
+                              
+                //Convertendo binário para decimal
+                for (int i = 0; i < entradas.size(); i++)
+                    entradas.get(i).setValorDecimal(entradas.get(i).converteValor(entradas.get(i).getValor())); 
                 break;
             case 2:
                 System.out.println("Saindo...");
@@ -81,11 +83,14 @@ public class main {
         long pc = entradas.getFirst().getValorDecimal();
         Processador mips = new Processador(pc);
         
-
-        //for (int i = 0; i < entradas.size(); i++)
-          //  System.out.println(entradas.get(i).getValor() + "     valor convertido: " + entradas.get(i).getValorDecimal());
+        /*for (Instrucoes entrada : entradas) {
+            System.out.println(entrada.getValorDecimal());
+        }*/
         
-
+        /*for (int i = 0; i < entradas.size(); i++)
+          System.out.println(entradas.get(i).getValor() + "     valor convertido: " + entradas.get(i).getValorDecimal());
+        */
+          
         entradas.clear(); //Libera memória
     }
 }
