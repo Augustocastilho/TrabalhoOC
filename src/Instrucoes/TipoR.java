@@ -71,7 +71,17 @@ public class TipoR extends Instrucoes{
         return resultadoFinal;
     }
     
-    public void slt(int val, int val2){}
-    public void sll(int val, int val2){}
-    public void jr(int val, int val2){}
+    public int slt(int val, int val2){
+        if(val<val2)
+            return 1;
+        return 0;
+    }
+    
+    public int sll(int val, int val2){
+        return (int)Math.pow(2, val2)*val;
+    }
+    
+    public int jr(int val, int val2){
+        return val;
+    }
 }

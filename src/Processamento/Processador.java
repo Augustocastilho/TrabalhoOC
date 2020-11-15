@@ -74,10 +74,10 @@ public class Processador {
                         resultado = funcoes.or(entrada1, entrada2);
                         break;
                     case "slt":
-                        //resultado = funcoes.slt(entrada1, entrada2);
+                        resultado = funcoes.slt(entrada1, entrada2);
                         break;
                     case "sll":
-                        //resultado = funcoes.sll(entrada1, entrada2);
+                        resultado = funcoes.sll(entrada1, entrada2);
                         break;
                     case "jr":
                         //resultado = funcoes.jr(entrada1, entrada2);
