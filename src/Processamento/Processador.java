@@ -13,8 +13,6 @@ public class Processador {
 
     private HashMap<Integer, String> mapaInstrucoes = new HashMap<>();
     private String nomeInstrucao;
-    
-    
 
     /**
      * cria um dicionario com todas as operacoes possiveis
@@ -93,23 +91,41 @@ public class Processador {
         return resultado;
     }
 
-    public List<Integer> registradores(int read1, int read2, int write, int writeData, int regWrite) {
+    /**
+     * 
+     * @param read1 Recebe IR[25:21]
+     * @param read2 Recebe IR[20:16]
+     * @param write Recebe IR[15:11]
+     * @param writeData 
+     * @param regWrite Registrador de memoria
+     * @return Lista com os valores de A e B
+     */
+    public List<Integer> registradores(
+            int read1,
+            int read2,
+            int write,
+            int writeData,
+            int regWrite
+    ) {
         Map<String, Integer> registrador = new HashMap<>();
         registrador.put("Read register 1", read1);
         registrador.put("Read register 2", read2);
         registrador.put("Write register", write);
         registrador.put("Write Data", writeData);
-        
+
         List<Integer> saidas = new ArrayList<>();
-        
-        switch(regWrite){
+
+        switch (regWrite) {
             case 1:
-                
+
                 break;
             default:
                 break;
         }
 
+        saidas.set(0, read1);
+        saidas.set(1, read2);
+        
         return saidas;
     }
 
