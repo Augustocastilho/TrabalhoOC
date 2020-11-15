@@ -1,9 +1,10 @@
 package Processamento;
 
 import Instrucoes.TipoR;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
 
 /**
  * simula o procedimento feito por um porcessador MIPS
@@ -12,10 +13,12 @@ public class Processador {
 
     private HashMap<Integer, String> mapaInstrucoes = new HashMap<>();
     private String nomeInstrucao;
+    
+    
 
     /**
      * cria um dicionario com todas as operacoes possiveis
-    */
+     */
     private void criaMap() {
         mapaInstrucoes.put(100000, "add");
         mapaInstrucoes.put(100010, "sub");
@@ -41,12 +44,12 @@ public class Processador {
     }
 
     /**
-    * @param entrada1 recebe o primeiro valor vindo do registrador
-    * @param entrada2 recebe o segundo valor vindo do registrador
-    * @param controleAlu indica qual operacao logica/matematica sera realizada
-    * @return retorna o resultado da operacao
-    */
-    public int Alu(int entrada1, int entrada2, int controleAlu) {
+     * @param entrada1 recebe o primeiro valor vindo do registrador
+     * @param entrada2 recebe o segundo valor vindo do registrador
+     * @param controleAlu indica qual operacao logica/matematica sera realizada
+     * @return retorna o resultado da operacao
+     */
+    public int alu(int entrada1, int entrada2, int controleAlu) {
         TipoR funcoes = new TipoR();
         int resultado = 0;
         int zero = 0;
@@ -82,10 +85,32 @@ public class Processador {
                     case "jr":
                         //resultado = funcoes.jr(entrada1, entrada2);
                         break;
-                    default: break;
+                    default:
+                        break;
                 }
                 break;
         }
         return resultado;
     }
+
+    public List<Integer> registradores(int read1, int read2, int write, int writeData, int regWrite) {
+        Map<String, Integer> registrador = new HashMap<>();
+        registrador.put("Read register 1", read1);
+        registrador.put("Read register 2", read2);
+        registrador.put("Write register", write);
+        registrador.put("Write Data", writeData);
+        
+        List<Integer> saidas = new ArrayList<>();
+        
+        switch(regWrite){
+            case 1:
+                
+                break;
+            default:
+                break;
+        }
+
+        return saidas;
+    }
+
 }

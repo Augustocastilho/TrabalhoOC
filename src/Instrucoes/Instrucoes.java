@@ -1,5 +1,8 @@
 package Instrucoes;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Constroi uma operacao de qualquer tipo
  */
@@ -7,6 +10,7 @@ public class Instrucoes {
 
     private String valor;
     private double valorDecimal;
+    private Map<String, Registradores> registradores = new HashMap<>();
 
     public Instrucoes() {
         this.valor = "00000000000000000000000000000000";
@@ -31,6 +35,25 @@ public class Instrucoes {
                 valorDecimal = valorDecimal + z;
             }
         }
+    }
+
+    public void criaRegistradores() {
+        //tipos I
+        registradores.put("RegWrite", new Registradores(1));
+        registradores.put("MemToReg", new Registradores(1));
+        registradores.put("Branch", new Registradores(1));
+        registradores.put("MemRead", new Registradores(1));
+        registradores.put("MemWrite", new Registradores(1));
+        registradores.put("RegDst", new Registradores(1));
+        registradores.put("ALUOp", new Registradores(2));
+        registradores.put("ALUSrc", new Registradores(1));
+        registradores.put("PC", new Registradores(32));
+        registradores.put("ReadData1", new Registradores(32));
+        registradores.put("ReadData2", new Registradores(32));
+        registradores.put("ImmediateValue", new Registradores(32));
+        registradores.put("rs", new Registradores(5));
+        registradores.put("Destino1", new Registradores(5));
+        registradores.put("Destino2", new Registradores(5));
     }
 
 }

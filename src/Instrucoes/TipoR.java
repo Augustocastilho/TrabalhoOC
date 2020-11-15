@@ -5,8 +5,8 @@ package Instrucoes;
  */
 public class TipoR extends Instrucoes{
 
-    private int op ; //6 bits
-    private int rs ; //5 bits
+    private int op; //6 bits
+    private int rs; //5 bits
     private int rt; //5 bits
     private int rd; //5 bits
     private int shamt; //5 bits
@@ -20,6 +20,17 @@ public class TipoR extends Instrucoes{
         this.shamt = Integer.parseInt(getValor().substring(21, 25));
         this.funct = Integer.parseInt(getValor().substring(26, 31));
     }
+    
+    registers.put("RegWrite", new Register(1));
+			registers.put("MemToReg", new Register(1));
+			registers.put("Branch", new Register(1));
+			registers.put("MemRead", new Register(1));
+			registers.put("MemWrite", new Register(1));
+			registers.put("BranchAddress", new Register(32));
+			registers.put("Zero", new Register(1));
+			registers.put("ALUResult", new Register(32));
+			registers.put("ReadData2", new Register(32));
+			registers.put("Destination", new Register(5));
     
     public int add(int val, int val2){
         return val+val2;
