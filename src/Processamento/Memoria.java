@@ -12,7 +12,7 @@ public class Memoria {
     int memoria[];
     
     public Memoria(){
-        memoria = new int[32];
+        memoria = new int[256];
     }
     
     

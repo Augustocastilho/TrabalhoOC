@@ -7,18 +7,19 @@ import java.nio.file.Paths;
 
 /**
  *
- * @author Beatr
+ * Onde é lido o arquivo .txt
  */
+
 public class Leitura {
     
     public String leitura(String file) throws IOException{
-        Path caminho = Paths.get(file);
+        Path caminho = Paths.get("arquivos/"+file);
         try{
             byte [] texto = Files.readAllBytes(caminho);
             String leitura = new String(texto);
             return leitura;
         }catch(Exception e){
-            e.printStackTrace();
+            System.out.println("Erro na leitura.");
         }
         return null;
     }
