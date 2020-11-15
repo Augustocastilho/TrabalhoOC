@@ -2,6 +2,7 @@ package Principal;
 
 import Arquivos.Leitura;
 import Instrucoes.Instrucoes;
+import Processamento.Processador;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -45,9 +46,8 @@ public class main {
                     }
                 }
 
-                for (int i = 0; i < entradas.size(); i++) {
-                    entradas.get(i).converteValor();
-                }
+                for (int i = 0; i < entradas.size(); i++)
+                    entradas.get(i).setValorDecimal(entradas.get(i).converteValor(entradas.get(i).getValor()));
 
                 break;
             case 1:
@@ -61,9 +61,13 @@ public class main {
                     e.printStackTrace();
                 }
                 
+                //precisa implementar a inserçao de cada linha do arquivo no vetor
+                /*entradas.add(new Instrucoes());
+                
+                
                 for (int i = 0; i < entradas.size(); i++) {
                     entradas.get(i).converteValor();
-                }
+                }*/
                 
                 break;
             case 2:
@@ -75,10 +79,12 @@ public class main {
                 break;
         }
         long pc = entradas.getFirst().getValorDecimal();
+        Processador mips = new Processador(pc);
+        
 
-        for (int i = 0; i < entradas.size(); i++) {
-            System.out.println(entradas.get(i).getValor() + "     valor convertido: " + entradas.get(i).getValorDecimal());
-        }
+        //for (int i = 0; i < entradas.size(); i++)
+          //  System.out.println(entradas.get(i).getValor() + "     valor convertido: " + entradas.get(i).getValorDecimal());
+        
 
         entradas.clear(); //Libera memória
     }

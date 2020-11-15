@@ -15,18 +15,26 @@ public class Processador {
     private String nomeInstrucao;
 
     /**
+     * 
+     * @param pc inicia o processador MIPS
+     */
+    public Processador(long pc){
+        criaMapR();
+    }
+    
+    /**
      * cria um dicionario com todas as operacoes possiveis
      */
-    private void criaMap() {
-        mapaInstrucoes.put(100000, "add");
-        mapaInstrucoes.put(100010, "sub");
-        mapaInstrucoes.put(011000, "mult");
-        mapaInstrucoes.put(011010, "div");
-        mapaInstrucoes.put(100100, "and");
-        mapaInstrucoes.put(100101, "or");
-        mapaInstrucoes.put(101010, "slt");
-        mapaInstrucoes.put(000000, "sll");
-        mapaInstrucoes.put(001000, "jr");
+    private void criaMapR() {
+        mapaInstrucoes.put(32, "add");
+        mapaInstrucoes.put(34, "sub");
+        mapaInstrucoes.put(24, "mult");
+        mapaInstrucoes.put(26, "div");
+        mapaInstrucoes.put(36, "and");
+        mapaInstrucoes.put(37, "or");
+        mapaInstrucoes.put(42, "slt");
+        mapaInstrucoes.put(0, "sll");
+        mapaInstrucoes.put(8, "jr");
     }
 
     public void setNomeInstrucao(int controle) {
