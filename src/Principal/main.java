@@ -5,6 +5,7 @@ import Instrucoes.Instrucoes;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+
 public class main {
 
     /*public static void main(String[] args) throws IOException {
