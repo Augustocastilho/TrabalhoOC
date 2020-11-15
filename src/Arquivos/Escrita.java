@@ -23,4 +23,11 @@ public class Escrita {
             System.out.println("Erro ao salvar.");
         }
     }
+    
+    public void Impressao(){
+        System.out.println("**************************Iteracao********************************");
+        //System.out.println("PC="+pc -> +"Memoria="+memoria ->+"");
+        //System.out.println("Registradores temporarios: Alu.."+alu+", papa\n");
+        
+    }
 }
