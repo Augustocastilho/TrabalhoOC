@@ -9,11 +9,12 @@ import java.util.Map;
 public class Instrucoes {
 
     private String valor;
-    private double valorDecimal;
+    private long valorDecimal;
     private Map<String, Registradores> registradores = new HashMap<>();
 
     public Instrucoes() {
-        this.valor = "00000000000000000000000000000000";
+        this.valor = null;
+        valorDecimal = 0;
     }
 
     public String getValor() {
@@ -31,13 +32,17 @@ public class Instrucoes {
         for (int i = 0; i < this.valor.length(); i++) {
             char y = this.valor.charAt(this.valor.length() - 1 - i);
             if (y == '1') {
-                double z = Math.pow(2, i);
+                long z = (long)Math.pow(2, i);
                 valorDecimal = valorDecimal + z;
             }
         }
     }
+    
+    public long getValorDecimal(){
+        return this.valorDecimal;
+    }
 
-    public void criaRegistradores() {
+    public void criaRegistradoresTemporarios() {
         //tipos I
         registradores.put("RegWrite", new Registradores(1));
         registradores.put("MemToReg", new Registradores(1));

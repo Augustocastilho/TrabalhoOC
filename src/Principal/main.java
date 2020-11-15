@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class main {
 
     public static void main(String[] args) {
-        
+
         //Iniciado a entrada dos dados tanto pelo teclado, tanto por um arquivo .txt
         Leitura output = new Leitura();
         System.out.println("Para ler os dados atraves do teclado, digite '0'");
@@ -17,8 +17,8 @@ public class main {
         Scanner scanner = new Scanner(System.in);
         int input = scanner.nextInt();
         LinkedList<Instrucoes> entradas = new LinkedList<>();
-        
-        switch (input) {  
+
+        switch (input) {
             case 0:
                 //Lê os dados do teclado
                 System.out.println("Os dados serao lidos do teclado, voce deve digitar cada instrucao em uma linha. "
@@ -26,35 +26,45 @@ public class main {
                         + "\nPara finalizar a leitura de dados e iniciar a execucao do programa, digite 2");
                 entradas.add(new Instrucoes());
                 entradas.getLast().setValor(scanner.nextLine().trim());
-                
+
                 while (!entradas.getLast().getValor().equals("2")) {
                     entradas.add(new Instrucoes());
-                    entradas.getLast().setValor(scanner.next().trim());
+                    entradas.getLast().setValor(scanner.nextLine().trim());
                 }
-                
+
                 System.out.println("Leitura de dados finalizada.");
-                
+
                 //Remove a última entrada que é a flag para parar a entrada de dados
                 entradas.remove(entradas.size() - 1);
                 entradas.remove(0);
-                
+
                 //Caso o usuário entre com bits de tamanho menor que 32, preenchemos todos os bits a direita com 0
                 for (Instrucoes entrada : entradas) {
-                    while(entrada.getValor().length() < 32){
+                    while (entrada.getValor().length() < 32) {
                         entrada.setValor(entrada.getValor().concat("0"));
-                    } 
+                    }
                 }
+
+                for (int i = 0; i < entradas.size(); i++) {
+                    entradas.get(i).converteValor();
+                }
+
                 break;
             case 1:
                 //Pede para que o usuário entre com o nome do arquivo para que seja lido
                 System.out.println("Entre com o nome do arquivo de leitura (colocando o nome do arquivo com o final .txt): ");
                 String caminho = scanner.next();
-                try{
+                try {
                     String arquivo = output.leitura(caminho);
                     System.out.println(arquivo);
-                }catch(Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
+                
+                for (int i = 0; i < entradas.size(); i++) {
+                    entradas.get(i).converteValor();
+                }
+                
                 break;
             case 2:
                 System.out.println("Saindo...");
@@ -63,11 +73,13 @@ public class main {
             default:
                 System.out.println("Entrada inválida!");
                 break;
-        } 
-        
-        for(int i=0; i<entradas.size();i++)
-            System.out.println(entradas.get(i).getValor());
-  
+        }
+        long pc = entradas.getFirst().getValorDecimal();
+
+        for (int i = 0; i < entradas.size(); i++) {
+            System.out.println(entradas.get(i).getValor() + "     valor convertido: " + entradas.get(i).getValorDecimal());
+        }
+
         entradas.clear(); //Libera memória
     }
 }
