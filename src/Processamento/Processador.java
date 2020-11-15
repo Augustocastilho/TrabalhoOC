@@ -1,8 +1,10 @@
 package Processamento;
 
+import Instrucoes.Instrucoes;
 import Instrucoes.TipoR;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,17 +13,27 @@ import java.util.Map;
  */
 public class Processador {
 
+    private Instrucoes memoria = new Instrucoes();
     private HashMap<Integer, String> mapaInstrucoes = new HashMap<>();
     private String nomeInstrucao;
 
+    private List<Map<String, Integer>> registradores = new LinkedList<>();
+
     /**
-     * 
+     *
      * @param pc inicia o processador MIPS
      */
-    public Processador(long pc){
-        criaMapR();
+    public Processador(Instrucoes pc) {
+        this.memoria = pc;
+        memoria.atribuiValores();
+        if (memoria.getOp() == 0) {
+            criaMapR();
+        } else {
+            criaMapIeJ();
+        }
+
     }
-    
+
     /**
      * cria um dicionario com todas as operacoes possiveis
      */
@@ -35,6 +47,16 @@ public class Processador {
         mapaInstrucoes.put(42, "slt");
         mapaInstrucoes.put(0, "sll");
         mapaInstrucoes.put(8, "jr");
+    }
+
+    private void criaMapIeJ() {
+        mapaInstrucoes.put(8, "addi");
+        mapaInstrucoes.put(35, "lw");
+        mapaInstrucoes.put(43, "sw");
+        mapaInstrucoes.put(4, "beq");
+        mapaInstrucoes.put(5, "bne");
+        mapaInstrucoes.put(2, "j");
+        mapaInstrucoes.put(3, "jal");
     }
 
     public void setNomeInstrucao(int controle) {
@@ -55,10 +77,10 @@ public class Processador {
      * @param controleAlu indica qual operacao logica/matematica sera realizada
      * @return retorna o resultado da operacao
      */
-    public int alu(int entrada1, int entrada2, int controleAlu) {
+    public long alu(long entrada1, long entrada2, long controleAlu) {
         TipoR funcoes = new TipoR();
-        int resultado = 0;
-        int zero = 0;
+        long resultado = 0;
+        int zero = (int) funcoes.sub(entrada1, entrada2) + 1;
         switch (zero) {
             case 1:
                 return 0;
@@ -100,26 +122,26 @@ public class Processador {
     }
 
     /**
-     * 
+     *
      * @param read1 Recebe IR[25:21]
      * @param read2 Recebe IR[20:16]
      * @param write Recebe IR[15:11]
-     * @param writeData 
+     * @param writeData
      * @param regWrite Registrador de memoria
      * @return Lista com os valores de A e B
      */
-    public List<Integer> registradores(
+    public List<Integer> registrador(
+            int numRegistrador,
             int read1,
             int read2,
             int write,
             int writeData,
             int regWrite
     ) {
-        Map<String, Integer> registrador = new HashMap<>();
-        registrador.put("Read register 1", read1);
-        registrador.put("Read register 2", read2);
-        registrador.put("Write register", write);
-        registrador.put("Write Data", writeData);
+        registradores.get(numRegistrador).put("Read register 1", read1);
+        registradores.get(numRegistrador).put("Read register 2", read2);
+        registradores.get(numRegistrador).put("Write register", write);
+        registradores.get(numRegistrador).put("Write Data", writeData);
 
         List<Integer> saidas = new ArrayList<>();
 
@@ -133,7 +155,7 @@ public class Processador {
 
         saidas.set(0, read1);
         saidas.set(1, read2);
-        
+
         return saidas;
     }
 
