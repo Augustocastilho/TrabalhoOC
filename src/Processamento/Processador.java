@@ -14,9 +14,9 @@ import java.util.Map;
 public class Processador {
 
     private Instrucoes memoriaInstrucao = new Instrucoes();
-    private Map<String,Long> memoriaDados = new HashMap<>();
+    private Map<String, Long> memoriaDados = new HashMap<>();
     private Map<Integer, String> mapaInstrucoes = new HashMap<>();
-    private String nomeInstrucao;
+    private String nomeInstrucao; //usado para verificacao no ALU
 
     private List<Map<String, Integer>> registradores = new LinkedList<>();
     private Map<String, Long> sinaisDeControle = new HashMap<>();
@@ -25,6 +25,16 @@ public class Processador {
      *
      * @param pc inicia o processador MIPS
      */
+    public Processador(Instrucoes pc) {
+        this.memoriaInstrucao = pc;
+        memoriaInstrucao.atribuiValores();
+        if (memoriaInstrucao.getOp() == 0) {
+            criaMapR();
+        } else {
+            criaMapIeJ();
+        }
+
+    }
 
     public void criaSinaisControle() {
         //tipos I
@@ -45,20 +55,8 @@ public class Processador {
         sinaisDeControle.put("Destino2", memoriaInstrucao.getOp());
     }
 
-
-    public Processador(Instrucoes pc) {
-        this.memoriaInstrucao = pc;
-        memoriaInstrucao.atribuiValores();
-        if (memoriaInstrucao.getOp() == 0) {
-            criaMapR();
-        } else {
-            criaMapIeJ();
-        }
-
-    }
-
     /**
-     * cria um dicionario com todas as operacoes possiveis
+     * cria um dicionario com todas as operacoes possiveis do tipo R
      */
     private void criaMapR() {
         mapaInstrucoes.put(32, "add");
@@ -72,6 +70,9 @@ public class Processador {
         mapaInstrucoes.put(8, "jr");
     }
 
+    /**
+     * cria um dicionario com todas as operacoes possiveis do tipo I e J
+     */
     private void criaMapIeJ() {
         mapaInstrucoes.put(8, "addi");
         mapaInstrucoes.put(35, "lw");
@@ -144,20 +145,35 @@ public class Processador {
         return resultado;
     }
 
-    public Long memoriaDeDados(Long address, Long writeData){
+    public Long memoriaDeDados(Long address, Long writeData) {
         memoriaDados.put("address", address);
         memoriaDados.put("writeData", writeData);
         memoriaDados.put("MemWrite", sinaisDeControle.get("MemWrite"));
         memoriaDados.put("MemRead", sinaisDeControle.get("MemRead"));
-        memoriaDados.put("ReadData", address);//modificar
-          
+
+        long memWrite = sinaisDeControle.get("MemWrite");
+        long memRead = sinaisDeControle.get("MemRead");
+
+        switch ((int) memWrite) {
+            case 1:
+                memoriaDados.put("ReadData", writeData);
+                break;
+            default:
+                break;
+        }
+
+        switch ((int) memRead) {
+            case 1:
+                memoriaDados.put("ReadData", address);
+                break;
+            default:
+                break;
+        }
         
         return memoriaDados.get("ReadData");
     }
-    
-    
+
     /**
-     *
      * @param read1 Recebe IR[25:21]
      * @param read2 Recebe IR[20:16]
      * @param write Recebe IR[15:11]
@@ -172,8 +188,8 @@ public class Processador {
             int writeData
     ) {
         List<Integer> saidas = new ArrayList<>();
-        long regWrite = sinaisDeControle.get("RegWrite");     
-                
+        long regWrite = sinaisDeControle.get("RegWrite");
+
         switch ((int) regWrite) {
             case 1:
                 write = writeData;
@@ -181,12 +197,12 @@ public class Processador {
             default:
                 break;
         }
-       
+
         registradores.get(numRegistrador).put("Read register 1", read1);
         registradores.get(numRegistrador).put("Read register 2", read2);
         registradores.get(numRegistrador).put("Write register", write);
         registradores.get(numRegistrador).put("Write Data", writeData);
-        
+
         saidas.set(0, read1);
         saidas.set(1, read2);
 
