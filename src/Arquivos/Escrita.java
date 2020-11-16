@@ -1,9 +1,14 @@
 package Arquivos;
 
+import Instrucoes.Instrucoes;
+import Processamento.Processador;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -24,10 +29,16 @@ public class Escrita {
         }
     }
     
-    public void Impressao(){
+    public void Impressao(
+            long pc, 
+            Instrucoes memoria, 
+            Processador processador,
+            Map<String, Integer> registradores,
+            String nomeInstrucao
+    ){
         System.out.println("**************************Iteracao********************************");
-        //System.out.println("PC="+pc -> +"Memoria="+memoria ->+"");
-        //System.out.println("Registradores temporarios: Alu.."+alu+", papa\n");
+        System.out.println("PC= "+pc+"Memoria="+memoria);
+        System.out.println("Registradores temporarios: Alu: ");
         
     }
 }

@@ -13,8 +13,9 @@ import java.util.Map;
  */
 public class Processador {
 
-    private Instrucoes memoria = new Instrucoes();
-    private HashMap<Integer, String> mapaInstrucoes = new HashMap<>();
+    private Instrucoes memoriaInstrucao = new Instrucoes();
+    private Map<String,Long> memoriaDados = new HashMap<>();
+    private Map<Integer, String> mapaInstrucoes = new HashMap<>();
     private String nomeInstrucao;
 
     private List<Map<String, Integer>> registradores = new LinkedList<>();
@@ -27,28 +28,28 @@ public class Processador {
 
     public void criaSinaisControle() {
         //tipos I
-        sinaisDeControle.put("RegWrite", memoria.getOp());
-        sinaisDeControle.put("MemToReg", memoria.getOp());
-        sinaisDeControle.put("Branch", memoria.getOp());
-        sinaisDeControle.put("MemRead", memoria.getOp());
-        sinaisDeControle.put("MemWrite", memoria.getOp());
-        sinaisDeControle.put("RegDst", memoria.getOp());
-        sinaisDeControle.put("ALUOp", memoria.getOp());
-        sinaisDeControle.put("ALUSrc", memoria.getOp());
-        sinaisDeControle.put("PC", memoria.getOp());
-        sinaisDeControle.put("ReadData1", memoria.getOp());
-        sinaisDeControle.put("ReadData2", memoria.getOp());
-        sinaisDeControle.put("ImmediateValue", memoria.getOp());
-        sinaisDeControle.put("rs", memoria.getOp());
-        sinaisDeControle.put("Destino1", memoria.getOp());
-        sinaisDeControle.put("Destino2", memoria.getOp());
+        sinaisDeControle.put("RegWrite", memoriaInstrucao.getOp());
+        sinaisDeControle.put("MemToReg", memoriaInstrucao.getOp());
+        sinaisDeControle.put("Branch", memoriaInstrucao.getOp());
+        sinaisDeControle.put("MemRead", memoriaInstrucao.getOp());
+        sinaisDeControle.put("MemWrite", memoriaInstrucao.getOp());
+        sinaisDeControle.put("RegDst", memoriaInstrucao.getOp());
+        sinaisDeControle.put("ALUOp", memoriaInstrucao.getOp());
+        sinaisDeControle.put("ALUSrc", memoriaInstrucao.getOp());
+        sinaisDeControle.put("PC", memoriaInstrucao.getOp());
+        sinaisDeControle.put("ReadData1", memoriaInstrucao.getOp());
+        sinaisDeControle.put("ReadData2", memoriaInstrucao.getOp());
+        sinaisDeControle.put("ImmediateValue", memoriaInstrucao.getOp());
+        sinaisDeControle.put("rs", memoriaInstrucao.getOp());
+        sinaisDeControle.put("Destino1", memoriaInstrucao.getOp());
+        sinaisDeControle.put("Destino2", memoriaInstrucao.getOp());
     }
 
 
     public Processador(Instrucoes pc) {
-        this.memoria = pc;
-        memoria.atribuiValores();
-        if (memoria.getOp() == 0) {
+        this.memoriaInstrucao = pc;
+        memoriaInstrucao.atribuiValores();
+        if (memoriaInstrucao.getOp() == 0) {
             criaMapR();
         } else {
             criaMapIeJ();
@@ -143,6 +144,18 @@ public class Processador {
         return resultado;
     }
 
+    public Long memoriaDeDados(Long address, Long writeData){
+        memoriaDados.put("address", address);
+        memoriaDados.put("writeData", writeData);
+        memoriaDados.put("MemWrite", sinaisDeControle.get("MemWrite"));
+        memoriaDados.put("MemRead", sinaisDeControle.get("MemRead"));
+        memoriaDados.put("ReadData", address);//modificar
+          
+        
+        return memoriaDados.get("ReadData");
+    }
+    
+    
     /**
      *
      * @param read1 Recebe IR[25:21]
