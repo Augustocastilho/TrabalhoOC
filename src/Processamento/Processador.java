@@ -169,7 +169,7 @@ public class Processador {
             default:
                 break;
         }
-        
+
         return memoriaDados.get("ReadData");
     }
 
@@ -207,6 +207,26 @@ public class Processador {
         saidas.set(1, read2);
 
         return saidas;
+    }
+
+    /**
+     * Se address for positivo soma 0s, se for negativo adiciona 1s
+     *
+     * @return valor acrescido de 0s ou 1s
+     */
+    public long singextend() {
+        char aux = memoriaInstrucao.getValor().charAt(16);
+        long val = 0;
+        switch (aux) {
+            case '1':
+                for (int i = 16; i < 32; i++) {
+                    long y = (long) Math.pow(2, i);
+                    val = val + y;
+                }
+                return val + memoriaInstrucao.getAddress();
+            default:
+                return memoriaInstrucao.getAddress();
+        }
     }
 
 }
