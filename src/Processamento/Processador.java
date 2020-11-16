@@ -18,11 +18,33 @@ public class Processador {
     private String nomeInstrucao;
 
     private List<Map<String, Integer>> registradores = new LinkedList<>();
+    private Map<String, Long> sinaisDeControle = new HashMap<>();
 
     /**
      *
      * @param pc inicia o processador MIPS
      */
+
+    public void criaSinaisControle() {
+        //tipos I
+        sinaisDeControle.put("RegWrite", memoria.getOp());
+        sinaisDeControle.put("MemToReg", memoria.getOp());
+        sinaisDeControle.put("Branch", memoria.getOp());
+        sinaisDeControle.put("MemRead", memoria.getOp());
+        sinaisDeControle.put("MemWrite", memoria.getOp());
+        sinaisDeControle.put("RegDst", memoria.getOp());
+        sinaisDeControle.put("ALUOp", memoria.getOp());
+        sinaisDeControle.put("ALUSrc", memoria.getOp());
+        sinaisDeControle.put("PC", memoria.getOp());
+        sinaisDeControle.put("ReadData1", memoria.getOp());
+        sinaisDeControle.put("ReadData2", memoria.getOp());
+        sinaisDeControle.put("ImmediateValue", memoria.getOp());
+        sinaisDeControle.put("rs", memoria.getOp());
+        sinaisDeControle.put("Destino1", memoria.getOp());
+        sinaisDeControle.put("Destino2", memoria.getOp());
+    }
+
+
     public Processador(Instrucoes pc) {
         this.memoria = pc;
         memoria.atribuiValores();
@@ -111,7 +133,7 @@ public class Processador {
                         resultado = funcoes.sll(entrada1, entrada2);
                         break;
                     case "jr":
-                        //resultado = funcoes.jr(entrada1, entrada2);
+                        resultado = funcoes.jr(entrada1);
                         break;
                     default:
                         break;
@@ -127,7 +149,6 @@ public class Processador {
      * @param read2 Recebe IR[20:16]
      * @param write Recebe IR[15:11]
      * @param writeData
-     * @param regWrite Registrador de memoria
      * @return Lista com os valores de A e B
      */
     public List<Integer> registrador(
@@ -135,24 +156,24 @@ public class Processador {
             int read1,
             int read2,
             int write,
-            int writeData,
-            int regWrite
+            int writeData
     ) {
-        registradores.get(numRegistrador).put("Read register 1", read1);
-        registradores.get(numRegistrador).put("Read register 2", read2);
-        registradores.get(numRegistrador).put("Write register", write);
-        registradores.get(numRegistrador).put("Write Data", writeData);
-
         List<Integer> saidas = new ArrayList<>();
-
-        switch (regWrite) {
+        long regWrite = sinaisDeControle.get("RegWrite");     
+                
+        switch ((int) regWrite) {
             case 1:
-
+                write = writeData;
                 break;
             default:
                 break;
         }
-
+       
+        registradores.get(numRegistrador).put("Read register 1", read1);
+        registradores.get(numRegistrador).put("Read register 2", read2);
+        registradores.get(numRegistrador).put("Write register", write);
+        registradores.get(numRegistrador).put("Write Data", writeData);
+        
         saidas.set(0, read1);
         saidas.set(1, read2);
 

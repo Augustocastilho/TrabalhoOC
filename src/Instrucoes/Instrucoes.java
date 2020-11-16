@@ -10,7 +10,6 @@ public class Instrucoes {
 
     private String valor;
     private long valorDecimal;
-    private Map<String, Long> registradores = new HashMap<>();
 
     private long op; //6 bits
     private long rs; //5 bits
@@ -99,23 +98,5 @@ public class Instrucoes {
         return address;
     }
 
-    public void criaSinaisControle() {
-        //tipos I
-        registradores.put("RegWrite", getOp());
-        registradores.put("MemToReg", getOp());
-        registradores.put("Branch", getOp());
-        registradores.put("MemRead", getOp());
-        registradores.put("MemWrite", getOp());
-        registradores.put("RegDst", getOp());
-        registradores.put("ALUOp", getOp());
-        registradores.put("ALUSrc", getOp());
-        registradores.put("PC", getOp());
-        registradores.put("ReadData1", getOp());
-        registradores.put("ReadData2", getOp());
-        registradores.put("ImmediateValue", getOp());
-        registradores.put("rs", getOp());
-        registradores.put("Destino1", getOp());
-        registradores.put("Destino2", getOp());
-    }
 
 }

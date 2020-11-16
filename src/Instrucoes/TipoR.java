@@ -65,7 +65,7 @@ public class TipoR{
         return (int)Math.pow(2, val2)*val;
     }
     
-    public long jr(long val, long val2){
-        return val;
+    public long jr(long endereco){
+        return endereco;
     }
 }
