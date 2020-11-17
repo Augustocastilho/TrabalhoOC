@@ -323,7 +323,7 @@ public class Processador {
                             memoriaInstrucao.getRd(),
                             memoriaInstrucao.getValorDecimal()
                     );
-                    memoriaInstrucao.setValorDecimal(regDst);
+                    //memoriaInstrucao.setValorDecimal(regDst);
                     break;
             }
             long aluSrc = sinaisDeControle.get("ALUSrc");

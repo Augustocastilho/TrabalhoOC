@@ -66,7 +66,7 @@ public class Instrucoes {
         } else { //instrucoes tipo R
             this.rd = converteValor(getValor().substring(16, 20));
             this.shamt = converteValor(getValor().substring(21, 25));
-            this.funct = converteValor(getValor().substring(26, 31));
+            this.funct = converteValor(getValor().substring(26, 32));
         }
     }
     
