@@ -253,7 +253,6 @@ public class Processador {
      * @param writeData
      */
     private void registrador(
-            int numRegistrador,
             long readRegister1,
             long readRegister2,
             long writeRegister,
@@ -309,7 +308,7 @@ public class Processador {
             long regDst = sinaisDeControle.get("RegDst");
             switch ((int) regDst) {
                 case 0:
-                    registrador(pc,
+                    registrador(
                             memoriaInstrucao.getRs(),
                             memoriaInstrucao.getRt(),
                             memoriaInstrucao.getRt(),
@@ -317,13 +316,13 @@ public class Processador {
                     );
                     break;
                 default:
-                    registrador(pc,
+                    registrador(
                             memoriaInstrucao.getRs(),
                             memoriaInstrucao.getRt(),
                             memoriaInstrucao.getRd(),
                             memoriaInstrucao.getValorDecimal()
                     );
-                    memoriaInstrucao.setValorDecimal(regDst);
+                    //memoriaInstrucao.setValorDecimal(regDst);
                     break;
             }
             long aluSrc = sinaisDeControle.get("ALUSrc");
@@ -339,6 +338,8 @@ public class Processador {
             }
         } else {
             criaMapIeJ();
+            setNomeInstrucao();
+            
         }
         Escrita escrita = new Escrita();
         escrita.ImpressaoTipoR(this);

@@ -53,7 +53,7 @@ public class Escrita {
                         "Address: "+processador.getMemoriaDados().get("address") + "\n";
         System.out.println(conteudo);
         String arquivo = "\n" + "**************************Memória de dados e sinal de controle*************************" + "\n"+
-                        "Read Data - Memória de dados: "+processador.getMemoriaDados().get("ReadData")+"\n"+
+                        "Read Data - Memória de dados: "+processador.getMemoriaDados()+"\n"+
                         "RegWrite: "+processador.getSinaisDeControle().get("RegWrite")+"\n"+
                         "MemToReg: "+processador.getSinaisDeControle().get("MemToReg")+"\n"+
                         "Branch: "+processador.getSinaisDeControle().get("Branch")+"\n"+
@@ -62,11 +62,7 @@ public class Escrita {
                         "RegDst: "+processador.getSinaisDeControle().get("RegDst")+"\n"+
                         "ALUOp: "+processador.getSinaisDeControle().get("ALUOp")+ "\n"+
                         "ALUSrc: "+processador.getSinaisDeControle().get("ALUSrc")+ "\n"+
-                        "PC: "+processador.getSinaisDeControle().get("PC")+"\n"+
-                        "Read Data 1: "+processador.getSinaisDeControle().get("ReadData1")+"\n"+
-                        "Read Data 2: "+processador.getSinaisDeControle().get("ReadData2")+"\n"+
-                        "ImmediateValue: "+processador.getSinaisDeControle().get("ImmediateValue")+"\n"+
-                        "Rs: "+processador.getSinaisDeControle().get("rs")+"\n";            
+                        "Jump: "+processador.getSinaisDeControle().get("Jump")+"\n";          
         String print = conteudo.concat(arquivo);
         gravaArquivo(print, processador);
     }

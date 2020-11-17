@@ -11,7 +11,7 @@ Resultado: 0
 Address: 19546144
 
 **************************Memória de dados e sinal de controle*************************
-Read Data - Memória de dados: null
+Read Data - Memória de dados: {address=19546144, MemWrite=0, MemRead=0, writeData=-1}
 RegWrite: 0
 MemToReg: 0
 Branch: 0
@@ -20,11 +20,7 @@ MemWrite: 0
 RegDst: 0
 ALUOp: 0
 ALUSrc: 0
-PC: null
-Read Data 1: null
-Read Data 2: null
-ImmediateValue: null
-Rs: null
+Jump: 0
 
 **************************Iteracao********************************
 PC: 1
@@ -39,7 +35,7 @@ Resultado: 23728128
 Address: 741504
 
 **************************Memória de dados e sinal de controle*************************
-Read Data - Memória de dados: null
+Read Data - Memória de dados: {address=741504, MemWrite=0, MemRead=0, writeData=-1}
 RegWrite: 0
 MemToReg: 0
 Branch: 0
@@ -48,9 +44,5 @@ MemWrite: 0
 RegDst: 0
 ALUOp: 0
 ALUSrc: 0
-PC: null
-Read Data 1: null
-Read Data 2: null
-ImmediateValue: null
-Rs: null
+Jump: 0
 
