@@ -80,8 +80,15 @@ public class main {
                 System.out.println("Entrada inválida!");
                 break;
         }
-        Instrucoes pc = entradas.getFirst();
-        Processador mips = new Processador(pc);
+        
+        Instrucoes pc;
+        Processador mips;
+        int i=0;
+        while(i<entradas.size()){
+            pc = entradas.get(i);
+            mips = new Processador(pc);
+            i = mips.iniciaProcessador(i);
+        }
         
         /*for (Instrucoes entrada : entradas) {
             System.out.println(entrada.getValorDecimal());

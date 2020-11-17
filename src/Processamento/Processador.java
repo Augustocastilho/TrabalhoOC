@@ -17,9 +17,13 @@ public class Processador {
     private Map<String, Long> memoriaDados = new HashMap<>();
     private Map<Integer, String> mapaInstrucoes = new HashMap<>();
     private String nomeInstrucao; //usado para verificacao no ALU
-
-    private List<Map<String, Integer>> registradores = new LinkedList<>();
     private Map<String, Long> sinaisDeControle = new HashMap<>();
+
+    private List<Map<String, Long>> registradores = new LinkedList<>();
+    private List<Map<String, Long>> saidasRegistrador = new LinkedList<>();
+
+    private long aluOut = 0;
+    private long aluControl = 0;
 
     /**
      *
@@ -28,12 +32,50 @@ public class Processador {
     public Processador(Instrucoes pc) {
         this.memoriaInstrucao = pc;
         memoriaInstrucao.atribuiValores();
+    }
+
+    public int iniciaProcessador(int pc) {
         if (memoriaInstrucao.getOp() == 0) {
             criaMapR();
+            long regDst = sinaisDeControle.get("RegDst");
+            switch ((int) regDst) {
+                case 0:
+                    registrador(
+                            pc,
+                            memoriaInstrucao.getRs(),
+                            memoriaInstrucao.getRt(),
+                            memoriaInstrucao.getRt(),
+                            memoriaInstrucao.getValorDecimal() //verificar, por causa da entrada do multiplexidor
+                    );
+                    break;
+                default:
+                    registrador(
+                            pc,
+                            memoriaInstrucao.getRs(),
+                            memoriaInstrucao.getRt(),
+                            memoriaInstrucao.getRd(),
+                            memoriaInstrucao.getValorDecimal()
+                    );
+                    memoriaInstrucao.setValorDecimal(regDst);
+                    break;
+            }
+            long aluSrc = sinaisDeControle.get("ALUSrc");
+            switch ((int) aluSrc) {
+                case 0:
+                    //consertar para os ALUSrcB
+                    //desconsiderei o valor de AluOp por já estar fazendo apenas instrucoews do tipo R
+                    aluOut = alu(memoriaInstrucao.getValorDecimal(), saidasRegistrador.get(pc).get("Read data 2"), memoriaInstrucao.getFunct());
+                    break;
+                default:
+                    aluOut = alu(saidasRegistrador.get(pc).get("Read data 1"), saidasRegistrador.get(pc).get("Read data 2"), memoriaInstrucao.getFunct());
+
+                    break;
+            }
         } else {
             criaMapIeJ();
         }
 
+        return pc++;
     }
 
     public void criaSinaisControle() {
@@ -83,7 +125,7 @@ public class Processador {
         mapaInstrucoes.put(3, "jal");
     }
 
-    public void setNomeInstrucao(int controle) {
+    private void setNomeInstrucao(int controle) {
         for (Map.Entry<Integer, String> map : mapaInstrucoes.entrySet()) {
             if (controle == map.getKey()) {
                 nomeInstrucao = map.getValue();
@@ -101,7 +143,7 @@ public class Processador {
      * @param controleAlu indica qual operacao logica/matematica sera realizada
      * @return retorna o resultado da operacao
      */
-    public long alu(long entrada1, long entrada2, long controleAlu) {
+    private long alu(long entrada1, long entrada2, long controleAlu) {
         TipoR funcoes = new TipoR();
         long resultado = 0;
         int zero = (int) funcoes.sub(entrada1, entrada2) + 1;
@@ -145,7 +187,7 @@ public class Processador {
         return resultado;
     }
 
-    public Long memoriaDeDados(Long address, Long writeData) {
+    private Long memoriaDeDados(Long address, Long writeData) {
         memoriaDados.put("address", address);
         memoriaDados.put("writeData", writeData);
         memoriaDados.put("MemWrite", sinaisDeControle.get("MemWrite"));
@@ -174,39 +216,39 @@ public class Processador {
     }
 
     /**
-     * @param read1 Recebe IR[25:21]
-     * @param read2 Recebe IR[20:16]
-     * @param write Recebe IR[15:11]
+     * @param numRegistrador recebe o numero do registrador que vai ser
+     * utilizado
+     * @param readRegister1 Recebe IR[25:21]
+     * @param readRegister2 Recebe IR[20:16]
+     * @param writeRegister Recebe IR[15:11]
      * @param writeData
      * @return Lista com os valores de A e B
      */
-    public List<Integer> registrador(
+    private void registrador(
             int numRegistrador,
-            int read1,
-            int read2,
-            int write,
-            int writeData
+            long readRegister1,
+            long readRegister2,
+            long writeRegister,
+            long writeData
     ) {
-        List<Integer> saidas = new ArrayList<>();
         long regWrite = sinaisDeControle.get("RegWrite");
 
+        registradores.get(numRegistrador).put("Read register 1", readRegister1);
+        registradores.get(numRegistrador).put("Read register 2", readRegister2);
         switch ((int) regWrite) {
             case 1:
-                write = writeData;
+                writeRegister = writeData;
+                registradores.get(numRegistrador).put("Write register", writeRegister);
+                registradores.get(numRegistrador).put("Write Data", writeData);
                 break;
             default:
+                registradores.get(numRegistrador).put("Write register", (long) 0);
+                registradores.get(numRegistrador).put("Write Data", (long) 0);
                 break;
         }
 
-        registradores.get(numRegistrador).put("Read register 1", read1);
-        registradores.get(numRegistrador).put("Read register 2", read2);
-        registradores.get(numRegistrador).put("Write register", write);
-        registradores.get(numRegistrador).put("Write Data", writeData);
-
-        saidas.set(0, read1);
-        saidas.set(1, read2);
-
-        return saidas;
+        saidasRegistrador.get(numRegistrador).put("Read data 1", readRegister1);
+        saidasRegistrador.get(numRegistrador).put("Read data 2", readRegister2);
     }
 
     /**
@@ -214,7 +256,7 @@ public class Processador {
      *
      * @return valor acrescido de 0s ou 1s
      */
-    public long singextend() {
+    private long singextend() {
         char aux = memoriaInstrucao.getValor().charAt(16);
         long val = 0;
         switch (aux) {
