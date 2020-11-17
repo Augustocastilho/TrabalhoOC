@@ -18,9 +18,12 @@ public class main {
         Scanner scanner = new Scanner(System.in);
         int input = scanner.nextInt();
         LinkedList<Instrucoes> entradas = new LinkedList<>();
-
+        String escrita = "";
+        
         switch (input) {
             case 0:
+                System.out.println("Entre com o nome do arquivo para salvar o processamento: ");
+                escrita = scanner.next();
                 //Lê os dados do teclado
                 System.out.println("Os dados serao lidos do teclado, voce deve digitar cada instrucao em uma linha. "
                         + "\nCada instrucao deve conter um total de 32 digitos, caso seja menor, sera completado com zeros a esquerda. "
@@ -53,12 +56,14 @@ public class main {
                     entradas.get(i).setValorDecimal(entradas.get(i).converteValor(entradas.get(i).getValor()));
                 break;
             case 1:
+                System.out.println("Entre com o nome do arquivo para salvar o processamento: ");
+                escrita = scanner.next();
                 //Pede para que o usuário entre com o nome do arquivo para que seja lido
                 System.out.println("Entre com o nome do arquivo de leitura (colocando o nome do arquivo com o final .txt): ");
-                String caminho = scanner.next();
+                String leitura = scanner.next();
                 LinkedList<String> arquivo = new LinkedList<>();
                 try {
-                    arquivo = output.leitura(caminho);
+                    arquivo = output.leitura(leitura);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -80,17 +85,14 @@ public class main {
                 System.out.println("Entrada inválida!");
                 break;
         }
-        System.out.println("Entre com o nome do arquivo para salvar o processamento: ");
-        String caminho = scanner.next();
         Instrucoes pc;
         Processador mips;
         int i=0;
         while(i<entradas.size()){
             pc = entradas.get(i);
-            mips = new Processador(pc, caminho);
+            mips = new Processador(pc, escrita);
             i = mips.iniciaProcessador(i);
         }
-       
         entradas.clear(); //Libera memória
     }
 }
