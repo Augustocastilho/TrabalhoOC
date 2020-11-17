@@ -29,16 +29,29 @@ public class Escrita {
         }
     }
     
-    public void Impressao(
+    public void ImpressaoTipoR(
             long pc, 
             Instrucoes memoria, 
             Processador processador,
             Map<String, Integer> registradores,
-            String nomeInstrucao
+            String nomeInstrucao,
+            int numRegistrador,
+            long resultadoAlu,
+            long address
     ){
+        List<Integer> saidas = processador.registrador(registradores.get(""), registradores.get(""), numRegistrador , registradores.get("Write register"), registradores.get("Write Data"));
         System.out.println("**************************Iteracao********************************");
-        System.out.println("PC= "+pc+"Memoria="+memoria);
-        System.out.println("Registradores temporarios: Alu: ");
-        
+        System.out.println("PC: "+pc);
+        System.out.println("Instrução: "+nomeInstrucao);
+        System.out.println("Read Data 1: "+registradores.get("Read register 1"));
+        System.out.println("Read Data 2: "+registradores.get("Read register 2"));
+        System.out.println("Write register : "+registradores.get("Write register"));
+        System.out.println("Write data : "+registradores.get("Write Data"));
+        System.out.println("Read data 1: "+saidas.get(0));
+        System.out.println("Read data 2: "+saidas.get(1));
+        System.out.println("Resultado: "+resultadoAlu);
+        System.out.println("Address: "+address);
+        System.out.println("Write data: "+registradores.get("Write Data"));
+        System.out.println("Read data: "+resultadoAlu); // mudar a saida
     }
 }
