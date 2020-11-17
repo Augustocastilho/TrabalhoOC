@@ -4,8 +4,6 @@ import Arquivos.Escrita;
 import Instrucoes.Instrucoes;
 import Instrucoes.TipoR;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,8 +17,8 @@ public class Processador {
     private String nomeInstrucao;
     private Map<String, Long> sinaisDeControle;
     private String caminhoDoArquivo;
-    private List<Map<String, Long>> registradores;
-    private List<Map<String, Long>> saidasRegistrador;
+    private Map<String, Long> registradores;
+    private Map<String, Long> saidasRegistrador;
 
     private long aluOut = 0;
     private long aluControl = 0;
@@ -37,14 +35,15 @@ public class Processador {
         this.memoriaInstrucao = pc;
         memoriaInstrucao.atribuiValores();
         this.sinaisDeControle = new HashMap<>();
-        if (memoriaInstrucao.getOp() == 0)
+        if (memoriaInstrucao.getOp() == 0) {
             criaSinaisControleR();
-        else
+        } else {
             criaSinaisControleIeJ();
-        this.registradores = new LinkedList<>();
+        }
+        this.registradores = new HashMap<>();
         this.memoriaDados = new HashMap<>();
         this.mapaInstrucoes = new HashMap<>();
-        this.saidasRegistrador = new LinkedList<>();
+        this.saidasRegistrador = new HashMap<>();
     }
 
     //MÉTODOS GETS
@@ -77,11 +76,11 @@ public class Processador {
     }
 
     public Map<String, Long> getRegistradores() {
-        return registradores.get((int) indice);
+        return registradores;
     }
 
     public Map<String, Long> getSaidasRegistrador() {
-        return saidasRegistrador.get((int) indice);
+        return saidasRegistrador;
     }
 
     public long getAluOut() {
@@ -103,6 +102,8 @@ public class Processador {
         sinaisDeControle.put("MemToReg", memoriaInstrucao.converteValor(memoriaInstrucao.getValor().substring(31, 31)));
         sinaisDeControle.put("MemRead", memoriaInstrucao.converteValor(memoriaInstrucao.getValor().substring(31, 31)));
         sinaisDeControle.put("RegWrite", memoriaInstrucao.converteValor(memoriaInstrucao.getValor().substring(31, 31)));
+        sinaisDeControle.put("Jump", memoriaInstrucao.converteValor(memoriaInstrucao.getValor().substring(0, 0)));
+        sinaisDeControle.put("Branch", memoriaInstrucao.converteValor(memoriaInstrucao.getValor().substring(0, 0)));
 
     }
 
@@ -250,7 +251,6 @@ public class Processador {
      * @param readRegister2 Recebe IR[20:16]
      * @param writeRegister Recebe IR[15:11]
      * @param writeData
-     * @return Lista com os valores de A e B
      */
     private void registrador(
             int numRegistrador,
@@ -259,28 +259,25 @@ public class Processador {
             long writeRegister,
             long writeData
     ) {
-        registradores.add(new HashMap<>());
 
         long regWrite = sinaisDeControle.get("RegWrite");
 
-        registradores.get(numRegistrador).put("Read register 1", readRegister1);
-        registradores.get(numRegistrador).put("Read register 2", readRegister2);
+        registradores.put("Read register 1", readRegister1);
+        registradores.put("Read register 2", readRegister2);
         switch ((int) regWrite) {
             case 1:
                 writeRegister = writeData;
-                registradores.get(numRegistrador).put("Write register", writeRegister);
-                registradores.get(numRegistrador).put("Write Data", writeData);
+                registradores.put("Write register", writeRegister);
+                registradores.put("Write Data", writeData);
                 break;
             default:
-                registradores.get(numRegistrador).put("Write register", (long) 0);
-                registradores.get(numRegistrador).put("Write Data", (long) 0);
+                registradores.put("Write register", (long) 0);
+                registradores.put("Write Data", (long) 0);
                 break;
         }
 
-        saidasRegistrador.add(new HashMap<>());
-        saidasRegistrador.get(numRegistrador).put("Read data 1", readRegister1);
-        saidasRegistrador.add(new HashMap<>());
-        saidasRegistrador.get(numRegistrador).put("Read data 2", readRegister2);
+        saidasRegistrador.put("Read data 1", readRegister1);
+        saidasRegistrador.put("Read data 2", readRegister2);
     }
 
     /**
@@ -334,10 +331,10 @@ public class Processador {
                 case 0:
                     //consertar para os ALUSrcB
                     //desconsiderei o valor de AluOp por já estar fazendo apenas instrucoews do tipo R
-                    aluOut = alu(memoriaInstrucao.getValorDecimal(), saidasRegistrador.get(pc).get("Read data 2"), memoriaInstrucao.getFunct());
+                    aluOut = alu(memoriaInstrucao.getValorDecimal(), saidasRegistrador.get("Read data 2"), memoriaInstrucao.getFunct());
                     break;
                 default:
-                    aluOut = alu(saidasRegistrador.get(pc).get("Read data 1"), saidasRegistrador.get(pc).get("Read data 2"), memoriaInstrucao.getFunct());
+                    aluOut = alu(saidasRegistrador.get("Read data 1"), saidasRegistrador.get("Read data 2"), memoriaInstrucao.getFunct());
                     break;
             }
         } else {

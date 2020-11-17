@@ -1,0 +1,84 @@
+**************************Iteracao********************************
+PC: 0
+Instrução: null
+Read register 1: 5
+Read register 2: 5
+Write register : 0
+Write data : 0
+Read Data 1: 5
+Read Data 2: 5
+Resultado: 0
+Address: 21710880
+
+**************************Memória de dados e sinal de controle*************************
+Read Data - Memória de dados: null
+RegWrite: 0
+MemToReg: 0
+Branch: null
+MemRead: 0
+MemWrite: 0
+RegDst: 0
+ALUOp: 0
+ALUSrc: 0
+PC: null
+Read Data 1: null
+Read Data 2: null
+ImmediateValue: null
+Rs: null
+
+**************************Iteracao********************************
+PC: 1
+Instrução: null
+Read register 1: 5
+Read register 2: 5
+Write register : 0
+Write data : 0
+Read Data 1: 5
+Read Data 2: 5
+Resultado: 0
+Address: 21710884
+
+**************************Memória de dados e sinal de controle*************************
+Read Data - Memória de dados: null
+RegWrite: 0
+MemToReg: 0
+Branch: null
+MemRead: 0
+MemWrite: 0
+RegDst: 0
+ALUOp: 0
+ALUSrc: 0
+PC: null
+Read Data 1: null
+Read Data 2: null
+ImmediateValue: null
+Rs: null
+
+**************************Iteracao********************************
+PC: 2
+Instrução: sll
+Read register 1: 0
+Read register 2: 8
+Write register : 0
+Write data : 0
+Read Data 1: 0
+Read Data 2: 8
+Resultado: 542179328
+Address: 2117888
+
+**************************Memória de dados e sinal de controle*************************
+Read Data - Memória de dados: null
+RegWrite: 0
+MemToReg: 0
+Branch: null
+MemRead: 0
+MemWrite: 0
+RegDst: 0
+ALUOp: 0
+ALUSrc: 0
+PC: null
+Read Data 1: null
+Read Data 2: null
+ImmediateValue: null
+Rs: null
+

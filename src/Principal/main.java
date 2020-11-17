@@ -90,14 +90,6 @@ public class main {
             mips = new Processador(pc, caminho);
             i = mips.iniciaProcessador(i);
         }
-        
-        /*for (Instrucoes entrada : entradas) {
-            System.out.println(entrada.getValorDecimal());
-        }*/
-        
-        /*for (int i = 0; i < entradas.size(); i++)
-          System.out.println(entradas.get(i).getValor() + "     valor convertido: " + entradas.get(i).getValorDecimal());
-        */
           
         entradas.clear(); //Libera memória
     }
