@@ -90,6 +90,7 @@ public class main {
             i = mips.iniciaProcessador(i);
         }
         
+        System.out.println("saiu");
         /*for (Instrucoes entrada : entradas) {
             System.out.println(entrada.getValorDecimal());
         }*/

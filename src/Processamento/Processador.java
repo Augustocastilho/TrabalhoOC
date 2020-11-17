@@ -333,6 +333,6 @@ public class Processador {
         }
         Escrita escrita = new Escrita();
         escrita.ImpressaoTipoR(this);
-        return pc++;
+        return pc = pc + 1;
     }
 }
