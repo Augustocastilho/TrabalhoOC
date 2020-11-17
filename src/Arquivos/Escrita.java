@@ -30,7 +30,7 @@ public class Escrita {
     ){
    
         System.out.println("**************************Iteracao********************************");
-        System.out.println("PC: "+processador);
+        System.out.println("PC: "+processador.getIndice());
         System.out.println("Instrução: "+processador.getNomeInstrucao());
         System.out.println("Read Data 1: "+processador.getRegistradores().get("Read data 1"));
         System.out.println("Read Data 2: "+processador.getRegistradores().get("Read register 2"));

@@ -13,33 +13,44 @@ import java.util.Map;
  */
 public class Processador {
 
-    private Instrucoes memoriaInstrucao = new Instrucoes();
-    private Map<String, Long> memoriaDados = new HashMap<>();
-    private Map<Integer, String> mapaInstrucoes = new HashMap<>();
+    private Instrucoes memoriaInstrucao;
+    private Map<String, Long> memoriaDados;
+    private Map<Integer, String> mapaInstrucoes;
     private String nomeInstrucao; //usado para verificacao no ALU
-    private Map<String, Long> sinaisDeControle = new HashMap<>();
+    private Map<String, Long> sinaisDeControle;
 
-    private List<Map<String, Long>> registradores = new LinkedList<>();
-    private List<Map<String, Long>> saidasRegistrador = new LinkedList<>();
+    private List<Map<String, Long>> registradores;
+    private List<Map<String, Long>> saidasRegistrador;
 
     private long aluOut = 0;
     private long aluControl = 0;
     
-    long indice;
+    private long indice;
 
     /**
      *
      * @param pc inicia o processador MIPS
      */
     public Processador(Instrucoes pc) {
+        memoriaInstrucao = new Instrucoes();
         this.memoriaInstrucao = pc;
         memoriaInstrucao.atribuiValores();
+        this.sinaisDeControle = new HashMap<>();
+        criaSinaisControle();
+        this.registradores = new LinkedList<>();
+        this.memoriaDados = new HashMap<>();
+        this.mapaInstrucoes = new HashMap<>();
+        this.saidasRegistrador = new LinkedList<>();
     }
 
     //MÉTODOS GETS
     
     public String getNomeInstrucao() {
         return this.nomeInstrucao;
+    }
+    
+    public long getIndice(){
+        return this.indice;
     }
     
     public Instrucoes getMemoriaInstrucao() {
@@ -75,51 +86,7 @@ public class Processador {
     }
     
     
-    //Processamento
-    
-    public int iniciaProcessador(int pc) {
-        this.indice = pc;
-        if (memoriaInstrucao.getOp() == 0) {
-            criaMapR();
-            long regDst = sinaisDeControle.get("RegDst");
-            switch ((int) regDst) {
-                case 0:
-                    registrador(pc,
-                            memoriaInstrucao.getRs(),
-                            memoriaInstrucao.getRt(),
-                            memoriaInstrucao.getRt(),
-                            memoriaInstrucao.getValorDecimal() //verificar, por causa da entrada do multiplexidor
-                    );
-                    break;
-                default:
-                    registrador(pc,
-                            memoriaInstrucao.getRs(),
-                            memoriaInstrucao.getRt(),
-                            memoriaInstrucao.getRd(),
-                            memoriaInstrucao.getValorDecimal()
-                    );
-                    memoriaInstrucao.setValorDecimal(regDst);
-                    break;
-            }
-            long aluSrc = sinaisDeControle.get("ALUSrc");
-            switch ((int) aluSrc) {
-                case 0:
-                    //consertar para os ALUSrcB
-                    //desconsiderei o valor de AluOp por já estar fazendo apenas instrucoews do tipo R
-                    aluOut = alu(memoriaInstrucao.getValorDecimal(), saidasRegistrador.get(pc).get("Read data 2"), memoriaInstrucao.getFunct());
-                    break;
-                default:
-                    aluOut = alu(saidasRegistrador.get(pc).get("Read data 1"), saidasRegistrador.get(pc).get("Read data 2"), memoriaInstrucao.getFunct());
-
-                    break;
-            }
-        } else {
-            criaMapIeJ();
-        }
-        Escrita escrita = new Escrita();
-        escrita.ImpressaoTipoR(this);
-        return pc++;
-    }
+    //Processamento    
 
     public void criaSinaisControle() {
         //tipos I
@@ -168,6 +135,24 @@ public class Processador {
         mapaInstrucoes.put(3, "jal");
     }
 
+    
+    private void setNomeInstrucao(){
+        switch( (int) memoriaInstrucao.getOp()){
+            case 0:
+                for(Map.Entry<Integer, String> map : mapaInstrucoes.entrySet()){
+                    if(memoriaInstrucao.getFunct() == map.getKey())
+                        this.nomeInstrucao = map.getValue();
+                }
+                break;
+            default:
+                for(Map.Entry<Integer, String> map : mapaInstrucoes.entrySet()){
+                    if(memoriaInstrucao.getOp() == map.getKey())
+                        this.nomeInstrucao = map.getValue();
+                }
+                break;
+        }          
+    } 
+    
     /**
      * @param entrada1 recebe o primeiro valor vindo do registrador
      * @param entrada2 recebe o segundo valor vindo do registrador
@@ -262,6 +247,8 @@ public class Processador {
             long writeRegister,
             long writeData
     ) {
+        registradores.add(new HashMap<>());
+        
         long regWrite = sinaisDeControle.get("RegWrite");
 
         registradores.get(numRegistrador).put("Read register 1", readRegister1);
@@ -278,7 +265,9 @@ public class Processador {
                 break;
         }
 
+        saidasRegistrador.add(new HashMap<>());
         saidasRegistrador.get(numRegistrador).put("Read data 1", readRegister1);
+        saidasRegistrador.add(new HashMap<>());
         saidasRegistrador.get(numRegistrador).put("Read data 2", readRegister2);
     }
 
@@ -300,5 +289,50 @@ public class Processador {
             default:
                 return memoriaInstrucao.getAddress();
         }
-    }   
+    }
+    
+    public int iniciaProcessador(int pc) {
+        this.indice = pc;
+        if (memoriaInstrucao.getOp() == 0) {
+            criaMapR();
+            setNomeInstrucao();
+            long regDst = sinaisDeControle.get("RegDst");
+            switch ((int) regDst) {
+                case 0:
+                    registrador(pc,
+                            memoriaInstrucao.getRs(),
+                            memoriaInstrucao.getRt(),
+                            memoriaInstrucao.getRt(),
+                            memoriaInstrucao.getValorDecimal() //verificar, por causa da entrada do multiplexidor
+                    );
+                    break;
+                default:
+                    registrador(pc,
+                            memoriaInstrucao.getRs(),
+                            memoriaInstrucao.getRt(),
+                            memoriaInstrucao.getRd(),
+                            memoriaInstrucao.getValorDecimal()
+                    );
+                    memoriaInstrucao.setValorDecimal(regDst);
+                    break;
+            }
+            long aluSrc = sinaisDeControle.get("ALUSrc");
+            switch ((int) aluSrc) {
+                case 0:
+                    //consertar para os ALUSrcB
+                    //desconsiderei o valor de AluOp por já estar fazendo apenas instrucoews do tipo R
+                    aluOut = alu(memoriaInstrucao.getValorDecimal(), saidasRegistrador.get(pc).get("Read data 2"), memoriaInstrucao.getFunct());
+                    break;
+                default:
+                    aluOut = alu(saidasRegistrador.get(pc).get("Read data 1"), saidasRegistrador.get(pc).get("Read data 2"), memoriaInstrucao.getFunct());
+
+                    break;
+            }
+        } else {
+            criaMapIeJ();
+        }
+        Escrita escrita = new Escrita();
+        escrita.ImpressaoTipoR(this);
+        return pc++;
+    }
 }
