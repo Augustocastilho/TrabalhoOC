@@ -1,8 +1,8 @@
 package Processamento;
 
+import Arquivos.Escrita;
 import Instrucoes.Instrucoes;
 import Instrucoes.TipoR;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,6 +24,8 @@ public class Processador {
 
     private long aluOut = 0;
     private long aluControl = 0;
+    
+    long indice;
 
     /**
      *
@@ -34,14 +36,55 @@ public class Processador {
         memoriaInstrucao.atribuiValores();
     }
 
+    //MÉTODOS GETS
+    
+    public String getNomeInstrucao() {
+        return this.nomeInstrucao;
+    }
+    
+    public Instrucoes getMemoriaInstrucao() {
+        return memoriaInstrucao;
+    }
+    
+    public Map<String, Long> getMemoriaDados() {
+        return memoriaDados;
+    }
+    
+    public Map<Integer, String> getMapaInstrucoes() {
+        return mapaInstrucoes;
+    }
+    
+    public Map<String, Long> getSinaisDeControle() {
+        return sinaisDeControle;
+    }
+    
+    public Map<String, Long> getRegistradores() {
+        return registradores.get( (int) indice);
+    }
+    
+    public Map<String, Long> getSaidasRegistrador() {
+        return saidasRegistrador.get( (int) indice);
+    }
+    
+    public long getAluOut() {
+        return aluOut;
+    }
+    
+    public long getAluControl() {
+        return aluControl;
+    }
+    
+    
+    //Processamento
+    
     public int iniciaProcessador(int pc) {
+        this.indice = pc;
         if (memoriaInstrucao.getOp() == 0) {
             criaMapR();
             long regDst = sinaisDeControle.get("RegDst");
             switch ((int) regDst) {
                 case 0:
-                    registrador(
-                            pc,
+                    registrador(pc,
                             memoriaInstrucao.getRs(),
                             memoriaInstrucao.getRt(),
                             memoriaInstrucao.getRt(),
@@ -49,8 +92,7 @@ public class Processador {
                     );
                     break;
                 default:
-                    registrador(
-                            pc,
+                    registrador(pc,
                             memoriaInstrucao.getRs(),
                             memoriaInstrucao.getRt(),
                             memoriaInstrucao.getRd(),
@@ -74,7 +116,8 @@ public class Processador {
         } else {
             criaMapIeJ();
         }
-
+        Escrita escrita = new Escrita();
+        escrita.ImpressaoTipoR(this);
         return pc++;
     }
 
@@ -123,18 +166,6 @@ public class Processador {
         mapaInstrucoes.put(5, "bne");
         mapaInstrucoes.put(2, "j");
         mapaInstrucoes.put(3, "jal");
-    }
-
-    private void setNomeInstrucao(int controle) {
-        for (Map.Entry<Integer, String> map : mapaInstrucoes.entrySet()) {
-            if (controle == map.getKey()) {
-                nomeInstrucao = map.getValue();
-            }
-        }
-    }
-
-    public String getNomeInstrucao() {
-        return this.nomeInstrucao;
     }
 
     /**
@@ -269,6 +300,5 @@ public class Processador {
             default:
                 return memoriaInstrucao.getAddress();
         }
-    }
-
+    }   
 }
