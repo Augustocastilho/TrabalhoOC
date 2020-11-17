@@ -33,7 +33,7 @@ public class Processador {
      */
     public Processador(Instrucoes pc, String caminho) {
         memoriaInstrucao = new Instrucoes();
-        this.caminhoDoArquivo = caminho;
+        caminhoDoArquivo = caminho;
         this.memoriaInstrucao = pc;
         memoriaInstrucao.atribuiValores();
         this.sinaisDeControle = new HashMap<>();

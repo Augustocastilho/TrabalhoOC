@@ -17,11 +17,15 @@ public class Escrita {
         
         File arquivo = new File("arquivos/"+caminho);
         FileWriter fileWriter = new FileWriter(arquivo, true);
+        PrintWriter printWriter = new PrintWriter(fileWriter);
         try{
-            if(!arquivo.exists())
+            if(!arquivo.exists()){
                 arquivo.createNewFile();
+                printWriter.println(conteudo);
+                printWriter.flush();
+                printWriter.close();
+            }                
             else{
-                PrintWriter printWriter = new PrintWriter(fileWriter);
                 printWriter.println(conteudo);
                 printWriter.flush();
                 printWriter.close();
