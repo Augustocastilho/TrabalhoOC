@@ -80,13 +80,14 @@ public class main {
                 System.out.println("Entrada inválida!");
                 break;
         }
-        
+        System.out.println("Entre com o nome do arquivo para salvar o processamento: ");
+        String caminho = scanner.next();
         Instrucoes pc;
         Processador mips;
         int i=0;
         while(i<entradas.size()){
             pc = entradas.get(i);
-            mips = new Processador(pc);
+            mips = new Processador(pc, caminho);
             i = mips.iniciaProcessador(i);
         }
         

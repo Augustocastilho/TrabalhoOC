@@ -18,7 +18,7 @@ public class Processador {
     private Map<Integer, String> mapaInstrucoes;
     private String nomeInstrucao; //usado para verificacao no ALU
     private Map<String, Long> sinaisDeControle;
-
+    private String caminhoDoArquivo;
     private List<Map<String, Long>> registradores;
     private List<Map<String, Long>> saidasRegistrador;
 
@@ -31,8 +31,9 @@ public class Processador {
      *
      * @param pc inicia o processador MIPS
      */
-    public Processador(Instrucoes pc) {
+    public Processador(Instrucoes pc, String caminho) {
         memoriaInstrucao = new Instrucoes();
+        this.caminhoDoArquivo = caminho;
         this.memoriaInstrucao = pc;
         memoriaInstrucao.atribuiValores();
         this.sinaisDeControle = new HashMap<>();
@@ -51,6 +52,10 @@ public class Processador {
     
     public long getIndice(){
         return this.indice;
+    }
+    
+    public String getCaminhoDoArquivo(){
+        return this.caminhoDoArquivo;
     }
     
     public Instrucoes getMemoriaInstrucao() {
@@ -293,6 +298,7 @@ public class Processador {
     
     public int iniciaProcessador(int pc) {
         this.indice = pc;
+        memoriaDeDados(memoriaInstrucao.getValorDecimal(), (long) -1);
         if (memoriaInstrucao.getOp() == 0) {
             criaMapR();
             setNomeInstrucao();

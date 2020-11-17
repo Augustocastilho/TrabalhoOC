@@ -5,9 +5,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 /**
  * 
@@ -39,17 +36,42 @@ public class Escrita {
             Processador processador
     ){
    
-        System.out.println("**************************Iteracao********************************");
-        System.out.println("PC: "+processador.getIndice());
-        System.out.println("Instrução: "+processador.getNomeInstrucao());
-        System.out.println("Read register 1: "+processador.getRegistradores().get("Read register 1"));
-        System.out.println("Read register 2: "+processador.getRegistradores().get("Read register 2"));
-        System.out.println("Write register : "+processador.getRegistradores().get("Write register"));
-        System.out.println("Write data : "+processador.getRegistradores().get("Write Data"));
-        System.out.println("Read Data 1: "+processador.getSaidasRegistrador().get("Read data 1"));
-        System.out.println("Read Data 2: "+processador.getSaidasRegistrador().get("Read data 2"));
-        System.out.println("Resultado: "+processador.getAluOut());
-        System.out.println("Address: "+processador.getMemoriaDados().get("address"));
-        
+        String conteudo = "**************************Iteracao********************************"+"\n"+
+                        "PC: "+processador.getIndice()+ "\n"+
+                        "Instrução: "+processador.getNomeInstrucao() + "\n"+
+                        "Read register 1: "+processador.getRegistradores().get("Read register 1") + "\n"+
+                        "Read register 2: "+processador.getRegistradores().get("Read register 2") + "\n"+
+                        "Write register : "+processador.getRegistradores().get("Write register") + "\n"+
+                        "Write data : "+processador.getRegistradores().get("Write Data") + "\n"+
+                        "Read Data 1: "+processador.getSaidasRegistrador().get("Read data 1") + "\n"+
+                        "Read Data 2: "+processador.getSaidasRegistrador().get("Read data 2") + "\n"+
+                        "Resultado: "+processador.getAluOut() + "\n"+
+                        "Address: "+processador.getMemoriaDados().get("address") + "\n";
+        System.out.println(conteudo);
+        String arquivo = "\n" + "**************************Memória de dados e sinal de controle*************************" + "\n"+
+                        "Read Data - Memória de dados: "+processador.getMemoriaDados().get("ReadData")+"\n"+
+                        "RegWrite: "+processador.getSinaisDeControle().get("RegWrite")+"\n"+
+                        "MemToReg: "+processador.getSinaisDeControle().get("MemToReg")+"\n"+
+                        "Branch: "+processador.getSinaisDeControle().get("Branch")+"\n"+
+                        "MemRead: "+processador.getSinaisDeControle().get("MemRead")+"\n"+
+                        "MemWrite: "+processador.getSinaisDeControle().get("MemWrite")+"\n"+
+                        "RegDst: "+processador.getSinaisDeControle().get("RegDst")+"\n"+
+                        "ALUOp: "+processador.getSinaisDeControle().get("ALUOp")+ "\n"+
+                        "ALUSrc: "+processador.getSinaisDeControle().get("ALUSrc")+ "\n"+
+                        "PC: "+processador.getSinaisDeControle().get("PC")+"\n"+
+                        "Read Data 1: "+processador.getSinaisDeControle().get("ReadData1")+"\n"+
+                        "Read Data 2: "+processador.getSinaisDeControle().get("ReadData2")+"\n"+
+                        "ImmediateValue: "+processador.getSinaisDeControle().get("ImmediateValue")+"\n"+
+                        "Rs: "+processador.getSinaisDeControle().get("rs")+"\n";            
+        String print = conteudo.concat(arquivo);
+        gravaArquivo(print, processador);
+    }
+    
+    public void gravaArquivo(String conteudo, Processador processador){
+        try{
+            escrita(processador.getCaminhoDoArquivo(), conteudo);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 }
