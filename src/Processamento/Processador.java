@@ -264,7 +264,7 @@ public class Processador {
                 registradores.get(numRegistrador).put("Write Data", (long) 0);
                 break;
         }
-
+        
         saidasRegistrador.add(new HashMap<>());
         saidasRegistrador.get(numRegistrador).put("Read data 1", readRegister1);
         saidasRegistrador.add(new HashMap<>());
@@ -333,6 +333,7 @@ public class Processador {
         }
         Escrita escrita = new Escrita();
         escrita.ImpressaoTipoR(this);
-        return pc++;
+        
+        return pc = pc + 1;
     }
 }
