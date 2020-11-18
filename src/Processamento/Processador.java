@@ -105,7 +105,7 @@ public class Processador {
         sinaisDeControle.put("RegDst", (long) 1);
         sinaisDeControle.put("MemWrite", (long) 0);
         sinaisDeControle.put("MemToReg", (long) 0);
-        sinaisDeControle.put("MemRead",  (long) 0);
+        sinaisDeControle.put("MemRead", (long) 0);
         sinaisDeControle.put("Jump", (long) 0);
         sinaisDeControle.put("Branch", (long) 0);
 
@@ -113,7 +113,7 @@ public class Processador {
 
     public void criaSinaisControleIeJ() {
 
-        switch ((int) memoriaInstrucao.getOp()){
+        switch ((int) memoriaInstrucao.getOp()) {
             case 8:
                 sinaisDeControle.put("ALUOp", (long) 0);
                 sinaisDeControle.put("ALUSrc", (long) 1);
@@ -121,7 +121,7 @@ public class Processador {
                 sinaisDeControle.put("RegDst", (long) 0);
                 sinaisDeControle.put("MemWrite", (long) 0);
                 sinaisDeControle.put("MemToReg", (long) 0);
-                sinaisDeControle.put("MemRead",  (long) 0);
+                sinaisDeControle.put("MemRead", (long) 0);
                 sinaisDeControle.put("Jump", (long) 0);
                 sinaisDeControle.put("Branch", (long) 0);
                 break;
@@ -132,7 +132,7 @@ public class Processador {
                 sinaisDeControle.put("RegDst", (long) 0);
                 sinaisDeControle.put("MemWrite", (long) 0);
                 sinaisDeControle.put("MemToReg", (long) 1);
-                sinaisDeControle.put("MemRead",  (long) 1);
+                sinaisDeControle.put("MemRead", (long) 1);
                 sinaisDeControle.put("Jump", (long) 0);
                 sinaisDeControle.put("Branch", (long) 0);
                 break;
@@ -143,7 +143,7 @@ public class Processador {
                 sinaisDeControle.put("RegDst", (long) 0);
                 sinaisDeControle.put("MemWrite", (long) 1);
                 sinaisDeControle.put("MemToReg", (long) 0);
-                sinaisDeControle.put("MemRead",  (long) 0);
+                sinaisDeControle.put("MemRead", (long) 0);
                 sinaisDeControle.put("Jump", (long) 0);
                 sinaisDeControle.put("Branch", (long) 0);
                 break;
@@ -154,7 +154,7 @@ public class Processador {
                 sinaisDeControle.put("RegDst", (long) 0);
                 sinaisDeControle.put("MemWrite", (long) 0);
                 sinaisDeControle.put("MemToReg", (long) 0);
-                sinaisDeControle.put("MemRead",  (long) 0);
+                sinaisDeControle.put("MemRead", (long) 0);
                 sinaisDeControle.put("Jump", (long) 0);
                 sinaisDeControle.put("Branch", (long) 0);
                 break;
@@ -165,7 +165,7 @@ public class Processador {
                 sinaisDeControle.put("RegDst", (long) 0);
                 sinaisDeControle.put("MemWrite", (long) 0);
                 sinaisDeControle.put("MemToReg", (long) 0);
-                sinaisDeControle.put("MemRead",  (long) 0);
+                sinaisDeControle.put("MemRead", (long) 0);
                 sinaisDeControle.put("Jump", (long) 0);
                 sinaisDeControle.put("Branch", (long) 0);
                 break;
@@ -176,7 +176,7 @@ public class Processador {
                 sinaisDeControle.put("RegDst", (long) 0);
                 sinaisDeControle.put("MemWrite", (long) 0);
                 sinaisDeControle.put("MemToReg", (long) 0);
-                sinaisDeControle.put("MemRead",  (long) 0);
+                sinaisDeControle.put("MemRead", (long) 0);
                 sinaisDeControle.put("Jump", (long) 1);
                 sinaisDeControle.put("Branch", (long) 0);
                 break;
@@ -366,12 +366,12 @@ public class Processador {
                 return memoriaInstrucao.getAddress();
         }
     }
-    
-    public void resetaProcessador(){
+
+    public void resetaProcessador() {
         this.memoriaInstrucao.clear();
         this.sinaisDeControle.clear();
         this.registradores.clear();
-        this.memoriaDados .clear();
+        this.memoriaDados.clear();
         this.mapaInstrucoes.clear();
         this.saidasRegistrador.clear();
         this.memoria.clear();
@@ -407,10 +407,21 @@ public class Processador {
             long aluSrc = sinaisDeControle.get("ALUSrc");
             switch ((int) aluSrc) {
                 case 0:
-                    aluOut = alu(memoriaInstrucao.getValorDecimal(), saidasRegistrador.get("Read data 2"), memoriaInstrucao.getFunct());
+                    aluOut = alu(
+                            memoriaInstrucao.getValorDecimal(),
+                            saidasRegistrador.get("Read data 2"),
+                            memoriaInstrucao.getFunct());
+                    registrador(
+                            memoriaInstrucao.getRs(),
+                            memoriaInstrucao.getRt(),
+                            memoriaInstrucao.getRd(),
+                            aluOut);
                     break;
                 default:
-                    aluOut = alu(saidasRegistrador.get("Read data 1"), saidasRegistrador.get("Read data 2"), memoriaInstrucao.getFunct());
+                    aluOut = alu(
+                            saidasRegistrador.get("Read data 1"),
+                            saidasRegistrador.get("Read data 2"),
+                            memoriaInstrucao.getFunct());
                     break;
             }
         } else {
@@ -438,7 +449,7 @@ public class Processador {
                     //memoriaInstrucao.setValorDecimal(regDst);
                     break;
             }
-            switch( (int) memoriaInstrucao.getOp()){
+            switch ((int) memoriaInstrucao.getOp()) {
                 case 8:
                     resultado = funcoes.addi(memoriaInstrucao.getRt(), memoriaInstrucao.getAddress());
                     break;
@@ -448,33 +459,37 @@ public class Processador {
                     break;
                 case 43:
                     resultado = alu(indice, memoriaInstrucao.getAddress(), memoriaInstrucao.getOp());
-                    memoria.get( (int) indice).setValorDecimal(memoria.get( (int) resultado).getValorDecimal());
+                    memoria.get((int) indice).setValorDecimal(memoria.get((int) resultado).getValorDecimal());
                     break;
                 case 4:
                     resultado = funcoes.beq(memoriaInstrucao.getRs(), memoriaInstrucao.getRt(), memoriaInstrucao.getAddress(), memoriaInstrucao.getValorDecimal());
-                    if(resultado == -1)
+                    if (resultado == -1) {
                         break;
+                    }
                     escrita.Impressao(this);
                     return (int) resultado;
                 case 5:
-                    resultado = funcoes.bne(memoriaInstrucao.getRs(), memoriaInstrucao.getRt(), memoriaInstrucao.getAddress(),memoriaInstrucao.getValorDecimal());
-                    if(resultado == -1)
+                    resultado = funcoes.bne(memoriaInstrucao.getRs(), memoriaInstrucao.getRt(), memoriaInstrucao.getAddress(), memoriaInstrucao.getValorDecimal());
+                    if (resultado == -1) {
                         break;
+                    }
                     escrita.Impressao(this);
                     return (int) resultado;
                 case 2:
                     resultado = funcoes.jump(memoriaInstrucao.getAddress());
-                    if(resultado < 0 || resultado > memoria.size())
+                    if (resultado < 0 || resultado > memoria.size()) {
                         break;
+                    }
                     escrita.Impressao(this);
                     return (int) resultado;
                 case 3:
                     resultado = funcoes.jal(memoriaInstrucao.getAddress());
-                    if(resultado < 0 || resultado > memoria.size())
+                    if (resultado < 0 || resultado > memoria.size()) {
                         break;
+                    }
                     escrita.Impressao(this);
                     return (int) resultado;
-            }            
+            }
         }
         escrita.Impressao(this);
         return pc = pc + 1;
