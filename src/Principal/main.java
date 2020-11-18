@@ -14,13 +14,15 @@ public class main {
         Leitura output = new Leitura();
         System.out.println("Para ler os dados atraves do teclado, digite '0'");
         System.out.println("Para ler os dados de um arquivo, digite '1'");
-        System.out.println("Reset, digite '2'");
-        System.out.println("Para sair, digite '3'");
+        System.out.println("Para sair, digite '2'");
         Scanner scanner = new Scanner(System.in);
         int input = scanner.nextInt();
         LinkedList<Instrucoes> entradas = new LinkedList<>();
         String escrita = "";
-        
+        String modoExibicao = new String();
+        String aux = new String();
+        String reset = new String();
+
         switch (input) {
             case 0:
                 System.out.println("Entre com o nome do arquivo para salvar o processamento: ");
@@ -36,11 +38,12 @@ public class main {
                     entradas.add(new Instrucoes());
                     entradas.getLast().setValor(scanner.nextLine().trim());
                 }
-                
-                if(entradas.size() == 256)
+
+                if (entradas.size() == 256) {
                     System.out.println("Memória cheia, processamento finalizado");
-                else
+                } else {
                     System.out.println("Leitura de dados finalizada.");
+                }
 
                 //Remove a última entrada que é a flag para parar a entrada de dados
                 entradas.remove(entradas.size() - 1);
@@ -53,8 +56,13 @@ public class main {
                     }
                 }
 
-                for (int i = 0; i < entradas.size(); i++)
+                for (int i = 0; i < entradas.size(); i++) {
                     entradas.get(i).setValorDecimal(entradas.get(i).converteValor(entradas.get(i).getValor()));
+                }
+
+                System.out.println("Deseja fazer instrucao passo-a-passo ou direta? 'p' ou 'd', respectivamente");
+                modoExibicao = scanner.nextLine();
+
                 break;
             case 1:
                 System.out.println("Entre com o nome do arquivo para salvar o processamento: ");
@@ -68,21 +76,21 @@ public class main {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                                
+
                 for (String linha : arquivo) {
                     entradas.add(new Instrucoes());
-                    entradas.getLast().setValor(linha);   
+                    entradas.getLast().setValor(linha);
                 }
-                              
+
                 //Convertendo binário para decimal
-                for (int i = 0; i < entradas.size(); i++)
-                    entradas.get(i).setValorDecimal(entradas.get(i).converteValor(entradas.get(i).getValor())); 
+                for (int i = 0; i < entradas.size(); i++) {
+                    entradas.get(i).setValorDecimal(entradas.get(i).converteValor(entradas.get(i).getValor()));
+                }
+
+                System.out.println("Deseja fazer instrucao passo-a-passo ou direta? 'p' ou 'd', respectivamente");
+                modoExibicao = scanner.nextLine();
                 break;
             case 2:
-                System.out.println("Resetado");
-                entradas.clear();
-                break;
-            case 3:
                 System.out.println("Saindo...");
                 System.exit(0);
                 break;
@@ -90,13 +98,37 @@ public class main {
                 System.out.println("Entrada inválida!");
                 break;
         }
+
         Instrucoes pc;
         Processador mips;
-        int i=0;
-        while(i<entradas.size()){
+        int i = 0;
+        while (i < entradas.size()) {
             pc = entradas.get(i);
             mips = new Processador(pc, escrita, entradas);
             i = mips.iniciaProcessador(i);
+            switch (modoExibicao) {
+                case "p":
+                    System.out.println("Deseja continuar a execucao? 's' ou 'n'");
+                    aux = scanner.nextLine();
+                    switch (aux) {
+                        case "n":
+                            System.exit(0);
+                            break;
+                        default:
+                            System.out.println("Deseja resetar os valores? 's' ou 'n'");
+                            aux = scanner.nextLine();
+                            switch (aux) {
+                                case "s":
+                                    //mips.resetaProcessador();
+                                    System.out.println("Registros zerados.");
+                                    break;
+                                default:
+                                    break;
+                            }
+                            break;
+                    }
+                case "d": break;
+            }
         }
     }
 }
