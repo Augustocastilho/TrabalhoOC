@@ -369,7 +369,6 @@ public class Processador {
 
     public int iniciaProcessador(int pc) {
         this.indice = pc;
-        Escrita escrita = new Escrita();
         memoriaDeDados(memoriaInstrucao.getValorDecimal(), (long) -1, sinaisDeControle.get("MemWrite"), sinaisDeControle.get("MemRead"));
         if (memoriaInstrucao.getOp() == 0) {
             criaMapR();
