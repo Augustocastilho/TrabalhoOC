@@ -14,7 +14,8 @@ public class main {
         Leitura output = new Leitura();
         System.out.println("Para ler os dados atraves do teclado, digite '0'");
         System.out.println("Para ler os dados de um arquivo, digite '1'");
-        System.out.println("Para sair, digite '2'");
+        System.out.println("Reset, digite '2'");
+        System.out.println("Para sair, digite '3'");
         Scanner scanner = new Scanner(System.in);
         int input = scanner.nextInt();
         LinkedList<Instrucoes> entradas = new LinkedList<>();
@@ -78,6 +79,10 @@ public class main {
                     entradas.get(i).setValorDecimal(entradas.get(i).converteValor(entradas.get(i).getValor())); 
                 break;
             case 2:
+                System.out.println("Resetado");
+                entradas.clear();
+                break;
+            case 3:
                 System.out.println("Saindo...");
                 System.exit(0);
                 break;
@@ -93,6 +98,5 @@ public class main {
             mips = new Processador(pc, escrita, entradas);
             i = mips.iniciaProcessador(i);
         }
-        entradas.clear(); //Libera memória
     }
 }
