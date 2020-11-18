@@ -95,5 +95,8 @@ public class Instrucoes {
         return address;
     }
 
+    public void setRS(long valor){
+        this.rs = valor;
+    }
 
 }

@@ -359,6 +359,7 @@ public class Processador {
                     break;
                 case 35:
                     resultado = alu(memoriaInstrucao.getAddress(), indice, memoriaInstrucao.getOp());
+                    memoriaInstrucao.setRS(resultado);
                     break;
                 case 43:
                     resultado = alu(indice, memoriaInstrucao.getAddress(), memoriaInstrucao.getOp());
