@@ -379,6 +379,7 @@ public class Processador {
 
     public int iniciaProcessador(int pc) {
         this.indice = pc;
+        Escrita escrita = new Escrita();
         memoriaDeDados(memoriaInstrucao.getValorDecimal(), (long) -1, sinaisDeControle.get("MemWrite"), sinaisDeControle.get("MemRead"));
         if (memoriaInstrucao.getOp() == 0) {
             criaMapR();
@@ -451,10 +452,14 @@ public class Processador {
                     break;
                 case 4:
                     resultado = funcoes.beq(memoriaInstrucao.getRs(), memoriaInstrucao.getRt(), memoriaInstrucao.getAddress(), memoriaInstrucao.getValorDecimal());
+                    if(resultado == -1)
+                        break;
                     escrita.Impressao(this);
                     return (int) resultado;
                 case 5:
                     resultado = funcoes.bne(memoriaInstrucao.getRs(), memoriaInstrucao.getRt(), memoriaInstrucao.getAddress(),memoriaInstrucao.getValorDecimal());
+                    if(resultado == -1)
+                        break;
                     escrita.Impressao(this);
                     return (int) resultado;
                 case 2:

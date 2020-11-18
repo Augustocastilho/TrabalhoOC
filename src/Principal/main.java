@@ -61,7 +61,7 @@ public class main {
                 }
 
                 System.out.println("Deseja fazer instrucao passo-a-passo ou direta? 'p' ou 'd', respectivamente");
-                modoExibicao = scanner.nextLine();
+                modoExibicao = scanner.next();
 
                 break;
             case 1:
@@ -88,7 +88,7 @@ public class main {
                 }
 
                 System.out.println("Deseja fazer instrucao passo-a-passo ou direta? 'p' ou 'd', respectivamente");
-                modoExibicao = scanner.nextLine();
+                modoExibicao = scanner.next();
                 break;
             case 2:
                 System.out.println("Saindo...");

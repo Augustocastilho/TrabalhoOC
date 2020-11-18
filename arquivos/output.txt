@@ -94,3 +94,27 @@ ALUOp: 0
 ALUSrc: 1
 Jump: 0
 
+**************************Iteracao********************************
+PC: 4
+Instrução: bne
+Read register 1: 8
+Read register 2: 21
+Write register : 0
+Write data : 0
+Read Data 1: 8
+Read Data 2: 21
+Resultado: 0
+Address: 353697792
+
+**************************Memória de dados e sinal de controle*************************
+Read Data - Memória de dados: {address=353697792, MemWrite=0, MemRead=0, writeData=-1}
+RegWrite: 0
+MemToReg: 0
+Branch: 0
+MemRead: 0
+MemWrite: 0
+RegDst: 0
+ALUOp: 1
+ALUSrc: 0
+Jump: 0
+
