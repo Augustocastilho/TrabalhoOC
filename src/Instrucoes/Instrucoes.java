@@ -1,8 +1,5 @@
 package Instrucoes;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Constroi uma operacao de qualquer tipo
  */
