@@ -55,14 +55,14 @@ public class Instrucoes {
     }
 
     public void atribuiValores() {
-        this.op = converteValor(getValor().substring(0, 5));
-        this.rs = converteValor(getValor().substring(6, 10));
-        this.rt = converteValor(getValor().substring(11, 15));
+        this.op = converteValor(getValor().substring(0, 6));
+        this.rs = converteValor(getValor().substring(6, 11));
+        this.rt = converteValor(getValor().substring(11, 16));
         if (getOp() != 0) { //intrucoes tipo I e J
-            this.address = converteValor(getValor().substring(16, 31));
+            this.address = converteValor(getValor().substring(16, 32));
         } else { //instrucoes tipo R
-            this.rd = converteValor(getValor().substring(16, 20));
-            this.shamt = converteValor(getValor().substring(21, 25));
+            this.rd = converteValor(getValor().substring(16, 21));
+            this.shamt = converteValor(getValor().substring(21, 26));
             this.funct = converteValor(getValor().substring(26, 32));
         }
     }
