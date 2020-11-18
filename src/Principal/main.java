@@ -119,7 +119,7 @@ public class main {
                             aux = scanner.nextLine();
                             switch (aux) {
                                 case "s":
-                                    //mips.resetaProcessador();
+                                    mips.resetaProcessador();
                                     System.out.println("Registros zerados.");
                                     break;
                                 default:

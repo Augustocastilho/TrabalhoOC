@@ -66,7 +66,7 @@ public class Instrucoes {
             this.funct = converteValor(getValor().substring(26, 32));
         }
     }
-    
+
     public long getOp() {
         return op;
     }
@@ -95,8 +95,19 @@ public class Instrucoes {
         return address;
     }
 
-    public void setRS(long valor){
+    public void setRS(long valor) {
         this.rs = valor;
     }
 
+    public void clear() {
+        valor = null;
+        valorDecimal = 0;
+        op = 0;
+        rs = 0;
+        rt = 0;
+        rd = 0;
+        shamt = 0;
+        funct = 0;
+        address = 0;
+    }
 }
