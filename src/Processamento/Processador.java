@@ -2,8 +2,10 @@ package Processamento;
 
 import Arquivos.Escrita;
 import Instrucoes.Instrucoes;
+import Instrucoes.TipoIeJ;
 import Instrucoes.TipoR;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 /**
@@ -19,6 +21,7 @@ public class Processador {
     private String caminhoDoArquivo;
     private Map<String, Long> registradores;
     private Map<String, Long> saidasRegistrador;
+    private LinkedList<Instrucoes> memoria;
 
     private long aluOut = 0;
     private long aluControl = 0;
@@ -29,7 +32,7 @@ public class Processador {
      *
      * @param pc inicia o processador MIPS
      */
-    public Processador(Instrucoes pc, String caminho) {
+    public Processador(Instrucoes pc, String caminho, LinkedList<Instrucoes> memoria) {
         memoriaInstrucao = new Instrucoes();
         caminhoDoArquivo = caminho;
         this.memoriaInstrucao = pc;
@@ -44,6 +47,8 @@ public class Processador {
         this.memoriaDados = new HashMap<>();
         this.mapaInstrucoes = new HashMap<>();
         this.saidasRegistrador = new HashMap<>();
+        this.memoria = new LinkedList<>();
+        this.memoria.addAll(memoria);
     }
 
     //MÉTODOS GETS
@@ -177,6 +182,7 @@ public class Processador {
      */
     private long alu(long entrada1, long entrada2, long controleAlu) {
         TipoR funcoes = new TipoR();
+        TipoIeJ funcoesIJ = new TipoIeJ();
         long resultado = 0;
         int zero = (int) funcoes.sub(entrada1, entrada2) + 1;
         switch (zero) {
@@ -210,6 +216,12 @@ public class Processador {
                         break;
                     case 8:
                         resultado = funcoes.jr(entrada1);
+                        break;
+                    case 35:
+                        resultado = funcoesIJ.lw(entrada1, entrada2);
+                        break;
+                    case 43:
+                        resultado = funcoesIJ.sw(entrada1, entrada2);
                         break;
                     default:
                         break;
@@ -339,7 +351,32 @@ public class Processador {
         } else {
             criaMapIeJ();
             setNomeInstrucao();
-            
+            TipoIeJ funcoes = new TipoIeJ();
+            long resultado = 0;
+            switch( (int) memoriaInstrucao.getOp()){
+                case 8:
+                    resultado = funcoes.addi(memoriaInstrucao.getRt(), memoriaInstrucao.getAddress());
+                    break;
+                case 35:
+                    resultado = alu(memoriaInstrucao.getAddress(), indice, memoriaInstrucao.getOp());
+                    break;
+                case 43:
+                    resultado = alu(indice, memoriaInstrucao.getAddress(), memoriaInstrucao.getOp());
+                    memoria.get( (int) indice).setValorDecimal(memoria.get( (int) resultado).getValorDecimal());
+                    break;
+                case 4:
+                    resultado = funcoes.beq(memoriaInstrucao.getRs(), memoriaInstrucao.getRt(), memoriaInstrucao.getAddress(), memoriaInstrucao.getValorDecimal());
+                    break;
+                case 5:
+                    resultado = funcoes.bne(memoriaInstrucao.getRs(), memoriaInstrucao.getRt(), memoriaInstrucao.getAddress(),memoriaInstrucao.getValorDecimal());
+                    break;
+                case 2:
+                    resultado = funcoes.jump(memoriaInstrucao.getAddress());
+                    break;
+                case 3:
+                    resultado = funcoes.jal(memoriaInstrucao.getAddress());
+                    break;
+            }
         }
         Escrita escrita = new Escrita();
         escrita.ImpressaoTipoR(this);

@@ -5,29 +5,38 @@ package Instrucoes;
  */
 public class TipoIeJ{
     
+    
     public long addi(long val, long constante){
         return val + constante;
     }
     
-    public long lw(long memoria, long registrador){
-        registrador = memoria;
-        return registrador;
+    public long lw(long indice, long indiceAtual){
+        long destino = indice + indiceAtual;
+        return destino;
     }
     
-    public long sw(long memoria, long registrador){
-        memoria = registrador;
-        return memoria;
+    public long sw(long indiceAtual, long indice){
+        long destino = indice + indiceAtual;
+        return destino;
     }
     
-    public long beq(long val, long val2, int destino){
+    public long beq(long val, long val2, long destino, long pc){
         if(val == val2)
-            return destino;
-        return 0;
+            return pc + (destino<< 2);
+        return -1;
     }
     
-    public long bne(long val, long val2, long destino){
+    public long bne(long val, long val2, long destino, long pc){
         if(val != val2)
-            return destino;
-        return 0;
+            return pc + (destino<< 2);
+        return -1;
+    }
+    
+    public long jump(long val){
+        return val << 2;
+    }
+    
+    public long jal (long val){
+        return val << 2;
     }
 }

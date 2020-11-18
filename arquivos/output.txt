@@ -1,13 +1,13 @@
 **************************Iteracao********************************
 PC: 0
-Instrução: null
+Instrução: add
 Read register 1: 4
 Read register 2: 5
 Write register : 0
 Write data : 0
 Read Data 1: 4
 Read Data 2: 5
-Resultado: 0
+Resultado: 19546149
 Address: 19546144
 
 **************************Memória de dados e sinal de controle*************************
@@ -43,6 +43,54 @@ MemRead: 0
 MemWrite: 0
 RegDst: 0
 ALUOp: 0
+ALUSrc: 0
+Jump: 0
+
+**************************Iteracao********************************
+PC: 2
+Instrução: beq
+Read register 1: null
+Read register 2: null
+Write register : null
+Write data : null
+Read Data 1: null
+Read Data 2: null
+Resultado: 0
+Address: 1076756488
+
+**************************Memória de dados e sinal de controle*************************
+Read Data - Memória de dados: {address=1076756488, MemWrite=0, MemRead=0, writeData=-1}
+RegWrite: 0
+MemToReg: 0
+Branch: 0
+MemRead: 0
+MemWrite: 0
+RegDst: 0
+ALUOp: 0
+ALUSrc: 0
+Jump: 0
+
+**************************Iteracao********************************
+PC: 3
+Instrução: null
+Read register 1: null
+Read register 2: null
+Write register : null
+Write data : null
+Read Data 1: null
+Read Data 2: null
+Resultado: 0
+Address: 2397896710
+
+**************************Memória de dados e sinal de controle*************************
+Read Data - Memória de dados: {address=2397896710, MemWrite=0, MemRead=0, writeData=-1}
+RegWrite: 0
+MemToReg: 0
+Branch: 0
+MemRead: 0
+MemWrite: 0
+RegDst: 0
+ALUOp: 1
 ALUSrc: 0
 Jump: 0
 

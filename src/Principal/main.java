@@ -90,7 +90,7 @@ public class main {
         int i=0;
         while(i<entradas.size()){
             pc = entradas.get(i);
-            mips = new Processador(pc, escrita);
+            mips = new Processador(pc, escrita, entradas);
             i = mips.iniciaProcessador(i);
         }
         entradas.clear(); //Libera memória
