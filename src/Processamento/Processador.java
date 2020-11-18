@@ -34,8 +34,8 @@ public class Processador {
      */
     public Processador(Instrucoes pc, String caminho, LinkedList<Instrucoes> memoria) {
         memoriaInstrucao = new Instrucoes();
-        caminhoDoArquivo = caminho;
         this.memoriaInstrucao = pc;
+        caminhoDoArquivo = caminho;
         memoriaInstrucao.atribuiValores();
         this.sinaisDeControle = new HashMap<>();
         if (memoriaInstrucao.getOp() == 0) {
@@ -365,6 +365,16 @@ public class Processador {
             default:
                 return memoriaInstrucao.getAddress();
         }
+    }
+    
+    public void resetaProcessador(){
+        this.memoriaInstrucao.clear();
+        this.sinaisDeControle.clear();
+        this.registradores.clear();
+        this.memoriaDados .clear();
+        this.mapaInstrucoes.clear();
+        this.saidasRegistrador.clear();
+        this.memoria.clear();
     }
 
     public int iniciaProcessador(int pc) {
