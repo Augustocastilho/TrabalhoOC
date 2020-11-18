@@ -464,10 +464,14 @@ public class Processador {
                     return (int) resultado;
                 case 2:
                     resultado = funcoes.jump(memoriaInstrucao.getAddress());
+                    if(resultado < 0 || resultado > memoria.size())
+                        break;
                     escrita.Impressao(this);
                     return (int) resultado;
                 case 3:
                     resultado = funcoes.jal(memoriaInstrucao.getAddress());
+                    if(resultado < 0 || resultado > memoria.size())
+                        break;
                     escrita.Impressao(this);
                     return (int) resultado;
             }            

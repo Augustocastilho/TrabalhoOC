@@ -33,10 +33,10 @@ public class TipoIeJ{
     }
     
     public long jump(long val){
-        return val;
+        return val << 2;
     }
     
     public long jal (long val){
-        return val;
+        return val << 2;
     }
 }
