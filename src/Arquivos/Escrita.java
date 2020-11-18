@@ -36,7 +36,7 @@ public class Escrita {
         }
     }
     
-    public void ImpressaoTipoR(
+    public void Impressao(
             Processador processador
     ){
    

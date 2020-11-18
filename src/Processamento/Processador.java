@@ -99,32 +99,88 @@ public class Processador {
     //Processamento    
     public void criaSinaisControleR() {
 
-        sinaisDeControle.put("ALUOp", memoriaInstrucao.converteValor(memoriaInstrucao.getValor().substring(30, 31)));
-        sinaisDeControle.put("ALUSrc", memoriaInstrucao.converteValor(memoriaInstrucao.getValor().substring(31, 31)));
-        sinaisDeControle.put("RegWrite", memoriaInstrucao.converteValor(memoriaInstrucao.getValor().substring(31, 31)));
-        sinaisDeControle.put("RegDst", memoriaInstrucao.converteValor(memoriaInstrucao.getValor().substring(31, 31)));
-        sinaisDeControle.put("MemWrite", memoriaInstrucao.converteValor(memoriaInstrucao.getValor().substring(31, 31)));
-        sinaisDeControle.put("MemToReg", memoriaInstrucao.converteValor(memoriaInstrucao.getValor().substring(31, 31)));
-        sinaisDeControle.put("MemRead", memoriaInstrucao.converteValor(memoriaInstrucao.getValor().substring(31, 31)));
-        sinaisDeControle.put("RegWrite", memoriaInstrucao.converteValor(memoriaInstrucao.getValor().substring(31, 31)));
-        sinaisDeControle.put("Jump", memoriaInstrucao.converteValor(memoriaInstrucao.getValor().substring(0, 0)));
-        sinaisDeControle.put("Branch", memoriaInstrucao.converteValor(memoriaInstrucao.getValor().substring(0, 0)));
+        sinaisDeControle.put("ALUOp", (long) 2);
+        sinaisDeControle.put("ALUSrc", (long) 0);
+        sinaisDeControle.put("RegWrite", (long) 1);
+        sinaisDeControle.put("RegDst", (long) 1);
+        sinaisDeControle.put("MemWrite", (long) 0);
+        sinaisDeControle.put("MemToReg", (long) 0);
+        sinaisDeControle.put("MemRead",  (long) 0);
+        sinaisDeControle.put("Jump", (long) 0);
+        sinaisDeControle.put("Branch", (long) 0);
 
     }
 
     public void criaSinaisControleIeJ() {
 
-        sinaisDeControle.put("ALUOp", memoriaInstrucao.converteValor(memoriaInstrucao.getValor().substring(0, 1)));
-        sinaisDeControle.put("ALUSrc", memoriaInstrucao.converteValor(memoriaInstrucao.getValor().substring(0, 0)));
-        sinaisDeControle.put("RegWrite", memoriaInstrucao.converteValor(memoriaInstrucao.getValor().substring(0, 0)));
-        sinaisDeControle.put("RegDst", memoriaInstrucao.converteValor(memoriaInstrucao.getValor().substring(0, 0)));
-        sinaisDeControle.put("MemWrite", memoriaInstrucao.converteValor(memoriaInstrucao.getValor().substring(0, 0)));
-        sinaisDeControle.put("MemToReg", memoriaInstrucao.converteValor(memoriaInstrucao.getValor().substring(0, 0)));
-        sinaisDeControle.put("MemRead", memoriaInstrucao.converteValor(memoriaInstrucao.getValor().substring(0, 0)));
-        sinaisDeControle.put("RegWrite", memoriaInstrucao.converteValor(memoriaInstrucao.getValor().substring(0, 0)));
-        sinaisDeControle.put("Jump", memoriaInstrucao.converteValor(memoriaInstrucao.getValor().substring(0, 0)));
-        sinaisDeControle.put("Branch", memoriaInstrucao.converteValor(memoriaInstrucao.getValor().substring(0, 0)));
-
+        switch ((int) memoriaInstrucao.getOp()){
+            case 8:
+                sinaisDeControle.put("ALUOp", (long) 0);
+                sinaisDeControle.put("ALUSrc", (long) 1);
+                sinaisDeControle.put("RegWrite", (long) 1);
+                sinaisDeControle.put("RegDst", (long) 0);
+                sinaisDeControle.put("MemWrite", (long) 0);
+                sinaisDeControle.put("MemToReg", (long) 0);
+                sinaisDeControle.put("MemRead",  (long) 0);
+                sinaisDeControle.put("Jump", (long) 0);
+                sinaisDeControle.put("Branch", (long) 0);
+                break;
+            case 35:
+                sinaisDeControle.put("ALUOp", (long) 0);
+                sinaisDeControle.put("ALUSrc", (long) 1);
+                sinaisDeControle.put("RegWrite", (long) 1);
+                sinaisDeControle.put("RegDst", (long) 0);
+                sinaisDeControle.put("MemWrite", (long) 0);
+                sinaisDeControle.put("MemToReg", (long) 1);
+                sinaisDeControle.put("MemRead",  (long) 1);
+                sinaisDeControle.put("Jump", (long) 0);
+                sinaisDeControle.put("Branch", (long) 0);
+                break;
+            case 43:
+                sinaisDeControle.put("ALUOp", (long) 0);
+                sinaisDeControle.put("ALUSrc", (long) 1);
+                sinaisDeControle.put("RegWrite", (long) 0);
+                sinaisDeControle.put("RegDst", (long) 0);
+                sinaisDeControle.put("MemWrite", (long) 1);
+                sinaisDeControle.put("MemToReg", (long) 0);
+                sinaisDeControle.put("MemRead",  (long) 0);
+                sinaisDeControle.put("Jump", (long) 0);
+                sinaisDeControle.put("Branch", (long) 0);
+                break;
+            case 4:
+                sinaisDeControle.put("ALUOp", (long) 1);
+                sinaisDeControle.put("ALUSrc", (long) 0);
+                sinaisDeControle.put("RegWrite", (long) 0);
+                sinaisDeControle.put("RegDst", (long) 0);
+                sinaisDeControle.put("MemWrite", (long) 0);
+                sinaisDeControle.put("MemToReg", (long) 0);
+                sinaisDeControle.put("MemRead",  (long) 0);
+                sinaisDeControle.put("Jump", (long) 0);
+                sinaisDeControle.put("Branch", (long) 0);
+                break;
+            case 5:
+                sinaisDeControle.put("ALUOp", (long) 1);
+                sinaisDeControle.put("ALUSrc", (long) 0);
+                sinaisDeControle.put("RegWrite", (long) 0);
+                sinaisDeControle.put("RegDst", (long) 0);
+                sinaisDeControle.put("MemWrite", (long) 0);
+                sinaisDeControle.put("MemToReg", (long) 0);
+                sinaisDeControle.put("MemRead",  (long) 0);
+                sinaisDeControle.put("Jump", (long) 0);
+                sinaisDeControle.put("Branch", (long) 0);
+                break;
+            case 2 | 3:
+                sinaisDeControle.put("ALUOp", (long) 0);
+                sinaisDeControle.put("ALUSrc", (long) 0);
+                sinaisDeControle.put("RegWrite", (long) 0);
+                sinaisDeControle.put("RegDst", (long) 0);
+                sinaisDeControle.put("MemWrite", (long) 0);
+                sinaisDeControle.put("MemToReg", (long) 0);
+                sinaisDeControle.put("MemRead",  (long) 0);
+                sinaisDeControle.put("Jump", (long) 1);
+                sinaisDeControle.put("Branch", (long) 0);
+                break;
+        }
     }
 
     /**
@@ -296,7 +352,7 @@ public class Processador {
      *
      * @return valor acrescido de 0s ou 1s
      */
-    private long singextend() {
+    private long singExtend() {
         char aux = memoriaInstrucao.getValor().charAt(16);
         long val = 0;
         switch (aux) {
@@ -313,6 +369,7 @@ public class Processador {
 
     public int iniciaProcessador(int pc) {
         this.indice = pc;
+        Escrita escrita = new Escrita();
         memoriaDeDados(memoriaInstrucao.getValorDecimal(), (long) -1, sinaisDeControle.get("MemWrite"), sinaisDeControle.get("MemRead"));
         if (memoriaInstrucao.getOp() == 0) {
             criaMapR();
@@ -324,7 +381,7 @@ public class Processador {
                             memoriaInstrucao.getRs(),
                             memoriaInstrucao.getRt(),
                             memoriaInstrucao.getRt(),
-                            memoriaInstrucao.getValorDecimal() //verificar, por causa da entrada do multiplexidor
+                            memoriaInstrucao.getValorDecimal()
                     );
                     break;
                 default:
@@ -340,8 +397,6 @@ public class Processador {
             long aluSrc = sinaisDeControle.get("ALUSrc");
             switch ((int) aluSrc) {
                 case 0:
-                    //consertar para os ALUSrcB
-                    //desconsiderei o valor de AluOp por já estar fazendo apenas instrucoews do tipo R
                     aluOut = alu(memoriaInstrucao.getValorDecimal(), saidasRegistrador.get("Read data 2"), memoriaInstrucao.getFunct());
                     break;
                 default:
@@ -353,6 +408,26 @@ public class Processador {
             setNomeInstrucao();
             TipoIeJ funcoes = new TipoIeJ();
             long resultado = 0;
+            long regDst = sinaisDeControle.get("RegDst");
+            switch ((int) regDst) {
+                case 0:
+                    registrador(
+                            memoriaInstrucao.getRs(),
+                            memoriaInstrucao.getRt(),
+                            memoriaInstrucao.getRt(),
+                            memoriaInstrucao.getValorDecimal()
+                    );
+                    break;
+                default:
+                    registrador(
+                            memoriaInstrucao.getRs(),
+                            memoriaInstrucao.getRt(),
+                            memoriaInstrucao.getRd(),
+                            memoriaInstrucao.getValorDecimal()
+                    );
+                    //memoriaInstrucao.setValorDecimal(regDst);
+                    break;
+            }
             switch( (int) memoriaInstrucao.getOp()){
                 case 8:
                     resultado = funcoes.addi(memoriaInstrucao.getRt(), memoriaInstrucao.getAddress());
@@ -367,20 +442,23 @@ public class Processador {
                     break;
                 case 4:
                     resultado = funcoes.beq(memoriaInstrucao.getRs(), memoriaInstrucao.getRt(), memoriaInstrucao.getAddress(), memoriaInstrucao.getValorDecimal());
-                    break;
+                    escrita.Impressao(this);
+                    return (int) resultado;
                 case 5:
                     resultado = funcoes.bne(memoriaInstrucao.getRs(), memoriaInstrucao.getRt(), memoriaInstrucao.getAddress(),memoriaInstrucao.getValorDecimal());
-                    break;
+                    escrita.Impressao(this);
+                    return (int) resultado;
                 case 2:
                     resultado = funcoes.jump(memoriaInstrucao.getAddress());
-                    break;
+                    escrita.Impressao(this);
+                    return (int) resultado;
                 case 3:
                     resultado = funcoes.jal(memoriaInstrucao.getAddress());
-                    break;
-            }
+                    escrita.Impressao(this);
+                    return (int) resultado;
+            }            
         }
-        Escrita escrita = new Escrita();
-        escrita.ImpressaoTipoR(this);
+        escrita.Impressao(this);
         return pc = pc + 1;
     }
 }
